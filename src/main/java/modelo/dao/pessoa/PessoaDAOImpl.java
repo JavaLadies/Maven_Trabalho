@@ -1,22 +1,31 @@
 package modelo.dao.pessoa;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
+import java.util.List;
 
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
 import modelo.entidade.estudantil.Pessoa;
+import modelo.factory.conexao.ConexaoFactory;
 
 public class PessoaDAOImpl {
 
+	private ConexaoFactory fabrica;
+
+	public PessoaDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+	
 	public void inserirPessoa(Pessoa pessoa) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(pessoa);
@@ -45,7 +54,7 @@ public class PessoaDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(pessoa);
@@ -74,7 +83,7 @@ public class PessoaDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(pessoa);
@@ -97,21 +106,43 @@ public class PessoaDAOImpl {
 		}
 	}
 	
-	private SessionFactory conectarBanco() {
+	public List<Pessoa> recuperarPessoas() {
 
-		Configuration configuracao = new Configuration();
+		Session sessao = null;
+		List<Pessoa> pessoas = null;
 
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Pessoa.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.cliente.Cliente.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+		try {
 
-		configuracao.configure("hibernate.cfg.xml");
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			CriteriaQuery<Pessoa> criteria = construtor.createQuery(Pessoa.class);
+			Root<Pessoa> raizPessoa = criteria.from(Pessoa.class);
 
-		return fabricaSessao;
+			criteria.select(raizPessoa);
+
+			pessoas = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return pessoas;
 	}
+	
 }

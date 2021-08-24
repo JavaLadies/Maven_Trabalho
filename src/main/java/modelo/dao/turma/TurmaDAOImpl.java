@@ -2,6 +2,7 @@ package modelo.dao.turma;
 
 import java.util.List;
 
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -14,7 +15,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import exemplo.modelo.entidade.cliente.Cliente;
 import modelo.entidade.estudantil.Endereco;
 import modelo.entidade.estudantil.Escola;
 import modelo.entidade.estudantil.Turma;
