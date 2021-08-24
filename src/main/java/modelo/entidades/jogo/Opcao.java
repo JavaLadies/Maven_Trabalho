@@ -26,7 +26,7 @@ public class Opcao implements Serializable {
 	@Column(name = "texto_opcao", length = 200, nullable = false, unique = false)
 	private String texto;
 	
-	@Column(name = "ordem_atividade", nullable = false, unique = false)
+	@Column(name = "ordem_opcao", nullable = false, unique = false)
 	private byte ordem;
 	
 	@Column(name = "isCorreta_opcao", nullable = false, unique = false)

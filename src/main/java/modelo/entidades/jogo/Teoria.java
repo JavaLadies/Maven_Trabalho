@@ -26,7 +26,7 @@ public class Teoria implements Serializable {
 	@Column(name = "texto_teoria", length = 200, nullable = true, unique = false)
 	private String texto;
 	
-	//Uma teoria terá uma fase (Uma fase te várias teorias)
+	//Uma teoria terá uma fase (Uma fase tem várias teorias)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_fase")
 	private Fase fase;

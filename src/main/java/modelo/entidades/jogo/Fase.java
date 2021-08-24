@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +36,8 @@ public class Fase implements Serializable {
 	private String nome;
 	
 	//ENUM
+	@Column(name = "situacao_fase", nullable = false, unique = false)
+	@Enumerated(EnumType.STRING)
 	private Situacao status;
 	
 	//Uma fase tem um mundo (Um mundo tem muitas fases)

@@ -35,13 +35,15 @@ public class Escola extends Usuario implements Serializable {
 	@Column(name = "nome_escola", length = 45, nullable = false, unique = true)
 	private String nome;
 	
+	//Escola tem um contato
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@MapsId
 	@JoinColumn(name = "id_contato")
 	private Contato contato;
 	
+	//Escolas tem várias turmas
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "escola", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Turma> turmas;
+	private List<Turma> turmas = new ArrayList<Turma>();
 
 	public Escola() {}
 	
@@ -51,7 +53,6 @@ public class Escola extends Usuario implements Serializable {
 		setId(id);
 		setNome(nome);
 		setContato(contato);
-		turmas = new ArrayList<Turma>();
 	}
 
 	public Long getId() {

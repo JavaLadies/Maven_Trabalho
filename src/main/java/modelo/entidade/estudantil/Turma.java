@@ -40,11 +40,11 @@ public class Turma implements Serializable {
 	
 	//Uma turma tem muitos alunos.
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "turma", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Aluno> alunos;
+	private List<Aluno> alunos = new ArrayList<Aluno>();
 	
 	//Uma turma tem várias disciplinas.
 	@ManyToMany(mappedBy = "turmas", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Disciplina> disciplinas;
+	private List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 
 	public Turma() {
 	}
@@ -53,8 +53,6 @@ public class Turma implements Serializable {
 		setId(id);
 		setNome(nome);
 		setEscola(escola);
-		disciplinas = new ArrayList<Disciplina>();
-		alunos = new ArrayList<Aluno>();
 	}
 
 	public Long getId() {
