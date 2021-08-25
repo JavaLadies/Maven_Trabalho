@@ -1,22 +1,34 @@
 package modelo.dao.fase;
 
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 import modelo.entidades.jogo.Fase;
+import modelo.entidades.jogo.Mundo;
+import modelo.factory.conexao.ConexaoFactory;
 
-public class FaseDAOImpl {
+public class FaseDAOImpl implements FaseDAO {
 
+	private ConexaoFactory fabrica;
+
+	public FaseDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+	
 	public void inserirFase(Fase fase) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(fase);
@@ -45,7 +57,7 @@ public class FaseDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(fase);
@@ -70,11 +82,12 @@ public class FaseDAOImpl {
 
 	public void atualizarFase(Fase fase) {
 
+
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(fase);
@@ -97,21 +110,84 @@ public class FaseDAOImpl {
 		}
 	}
 	
-	private SessionFactory conectarBanco() {
+	public List<Fase> recuperarFases() {
 
-		Configuration configuracao = new Configuration();
+		Session sessao = null;
+		List<Fase> fases = null;
 
-		configuracao.addAnnotatedClass(modelo.entidades.jogo.Fase.class);
-		configuracao.addAnnotatedClass(modelo.entidades.jogo.Mundo.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+		try {
 
-		configuracao.configure("hibernate.cfg.xml");
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			CriteriaQuery<Fase> criteria = construtor.createQuery(Fase.class);
+			Root<Fase> raizFase = criteria.from(Fase.class);
 
-		return fabricaSessao;
+			criteria.select(raizFase);
+
+			fases = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return fases;
+	}
+	
+	public List<Fase> recuperarFasesMundo(Mundo mundo) {
+
+		Session sessao = null;
+		List<Fase> fases = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Fase> criteria = construtor.createQuery(Fase.class);
+			Root<Fase> raizFase = criteria.from(Fase.class);
+
+			Join<Fase, Mundo> juncaoMundo = raizFase.join(Fase_.mundo);
+
+			ParameterExpression<Long> idMundo = construtor.parameter(Long.class);
+			criteria.where(construtor.equal(juncaoMundo.get(Mundo_.ID), idMundo));
+
+			fases = sessao.createQuery(criteria).setParameter(idMundo, mundo.getId()).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return fases;
 	}
 }

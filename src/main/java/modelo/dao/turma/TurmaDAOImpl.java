@@ -2,6 +2,7 @@ package modelo.dao.turma;
 
 import java.util.List;
 
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -14,7 +15,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import exemplo.modelo.entidade.cliente.Cliente;
 import modelo.entidade.estudantil.Endereco;
 import modelo.entidade.estudantil.Escola;
 import modelo.entidade.estudantil.Turma;
@@ -173,9 +173,9 @@ public class TurmaDAOImpl implements TurmaDAO{
 				Join<Turma, Escola> juncaoEscola = raizTurma.join(Turma_.escola);
 				
 				ParameterExpression<Long> idEscola = construtor.parameter(Long.class);
-				criteria.where(construtor.equal(juncaoEscola.get(Escola_.turmas), cpfCliente));
+				criteria.where(construtor.equal(juncaoEscola.get(Escola_.turmas), idEscola));
 
-				enderecos = sessao.createQuery(criteria).setParameter(cpfCliente, cliente.getCpf()).getResultList();
+				turmas = sessao.createQuery(criteria).setParameter(idEscola, escola.getId()).getResultList();
 
 				sessao.getTransaction().commit();
 
@@ -194,6 +194,6 @@ public class TurmaDAOImpl implements TurmaDAO{
 				}
 			}
 
-			return enderecos;
+			return turmas;
 		}
 }

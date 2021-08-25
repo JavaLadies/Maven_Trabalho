@@ -7,7 +7,7 @@ import modelo.entidades.jogo.Teoria;
 
 public interface TeoriaDAO {
 	
-	void inseirTeoria (Teoria toria);
+	void inserirTeoria (Teoria toria);
 	
 	void deletarTeoria (Teoria teoria);
 	

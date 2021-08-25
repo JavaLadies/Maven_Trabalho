@@ -15,5 +15,5 @@ public interface FaseDAO {
 	
 	List<Fase> recuperarFases();
 	
-	List<Fase> recuperarMundoFases(Mundo mundo);
+	List<Fase> recuperarFasesMundo(Mundo mundo);
 }

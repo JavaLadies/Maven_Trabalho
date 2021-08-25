@@ -1,5 +1,14 @@
 package modelo.dao.disciplina;
 
+import java.util.List;
+
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -7,16 +16,24 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import modelo.entidade.estudantil.Disciplina;
+import modelo.entidade.estudantil.Turma;
+import modelo.factory.conexao.ConexaoFactory;
 
-public class DisciplinaDAOImpl {
+public class DisciplinaDAOImpl implements DisciplinaDAO {
 
+	private ConexaoFactory fabrica;
+
+	public DisciplinaDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+	
 	public void inserirDisciplina(Disciplina disciplina) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(disciplina);
@@ -45,7 +62,7 @@ public class DisciplinaDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(disciplina);
@@ -74,7 +91,7 @@ public class DisciplinaDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(disciplina);
@@ -97,22 +114,85 @@ public class DisciplinaDAOImpl {
 		}
 	}
 
-	private SessionFactory conectarBanco() {
+	public List<Disciplina> recuperarDisciplinas() {
 
-		Configuration configuracao = new Configuration();
+		Session sessao = null;
+		List<Disciplina> disciplinas = null;
 
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Disciplina.class);
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Professor.class);
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Turma.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+		try {
 
-		configuracao.configure("hibernate.cfg.xml");
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties())
-				.build();
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			CriteriaQuery<Disciplina> criteria = construtor.createQuery(Disciplina.class);
+			Root<Disciplina> raizDisciplina = criteria.from(Disciplina.class);
 
-		return fabricaSessao;
+			criteria.select(raizDisciplina);
+
+			disciplinas = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return disciplinas;
 	}
+	
+	public List<Disciplina> recuperarDisciplinasTurma(Turma turma) {
+
+		Session sessao = null;
+		List<Disciplina> disciplinas = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Disciplina> criteria = construtor.createQuery(Disciplina.class);
+			Root<Disciplina> raizDisciplina = criteria.from(Disciplina.class);
+
+			Join<Disciplina, Turma> juncaoTurma = raizDisciplina.join(Disciplina_.turmas);
+
+			ParameterExpression<Long> idTurma = construtor.parameter(Long.class);
+			criteria.where(construtor.equal(juncaoTurma.get(Turma_.ID), idTurma));
+
+			disciplinas = sessao.createQuery(criteria).setParameter(idTurma, turma.getId()).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return disciplinas;
+	}
+	
 }

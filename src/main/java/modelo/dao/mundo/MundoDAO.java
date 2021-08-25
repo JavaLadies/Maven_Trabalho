@@ -2,6 +2,7 @@ package modelo.dao.mundo;
 
 import java.util.List;
 
+import modelo.entidades.jogo.Jogo;
 import modelo.entidades.jogo.Mundo;
 
 public interface MundoDAO {
@@ -13,4 +14,6 @@ public interface MundoDAO {
 	void atualizarMundo(Mundo mundo);
 
 	List<Mundo> recuperarMundos();
+	
+	List<Mundo> recuperarMundosJogo(Jogo jogo);
 }

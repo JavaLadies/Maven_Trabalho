@@ -15,5 +15,5 @@ public interface EnderecoDAO {
 
 	List<Endereco> recuperarEnderecos();
 	
-	List<Endereco> recuperarEnderecoEscola(Escola escola);
+	Endereco recuperarEnderecoEscola(Escola escola);
 }

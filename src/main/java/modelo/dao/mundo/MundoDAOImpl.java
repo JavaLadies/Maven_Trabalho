@@ -1,14 +1,26 @@
 package modelo.dao.mundo;
 
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
+import modelo.entidades.jogo.Jogo;
 import modelo.entidades.jogo.Mundo;
+import modelo.factory.conexao.ConexaoFactory;
 
-public class MundoDAOImpl {
+public class MundoDAOImpl implements MundoDAO {
+
+	private ConexaoFactory fabrica;
+
+	public MundoDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
 
 	public void inserirMundo(Mundo mundo) {
 
@@ -16,7 +28,7 @@ public class MundoDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(mundo);
@@ -45,7 +57,7 @@ public class MundoDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(mundo);
@@ -74,7 +86,7 @@ public class MundoDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(mundo);
@@ -96,22 +108,85 @@ public class MundoDAOImpl {
 			}
 		}
 	}
+	
+	public List<Mundo> recuperarMundos() {
 
-	private SessionFactory conectarBanco() {
+		Session sessao = null;
+		List<Mundo> mundos = null;
 
-		Configuration configuracao = new Configuration();
+		try {
 
-		configuracao.addAnnotatedClass(modelo.entidades.jogo.Mundo.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.cliente.Cliente.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		configuracao.configure("hibernate.cfg.xml");
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			CriteriaQuery<Mundo> criteria = construtor.createQuery(Mundo.class);
+			Root<Mundo> raizMundo = criteria.from(Mundo.class);
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			criteria.select(raizMundo);
 
-		return fabricaSessao;
+			mundos = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return mundos;
+	}
+	
+	public List<Mundo> recuperarMundosJogo(Jogo jogo) {
+
+		Session sessao = null;
+		List<Mundo> mundos = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Mundo> criteria = construtor.createQuery(Mundo.class);
+			Root<Mundo> raizMundo = criteria.from(Mundo.class);
+
+			Join<Mundo, Jogo> juncaoJogo = raizMundo.join(Mundo_.jogo);
+
+			ParameterExpression<Long> idJogo = construtor.parameter(Long.class);
+			criteria.where(construtor.equal(juncaoJogo.get(Jogo_.ID), idJogo));
+
+			mundos = sessao.createQuery(criteria).setParameter(idJogo, jogo.getId()).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return mundos;
 	}
 }

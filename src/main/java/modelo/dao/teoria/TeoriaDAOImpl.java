@@ -1,22 +1,34 @@
 package modelo.dao.teoria;
 
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
+import modelo.entidades.jogo.Fase;
 import modelo.entidades.jogo.Teoria;
+import modelo.factory.conexao.ConexaoFactory;
 
-public class TeoriaDAOImpl {
+public class TeoriaDAOImpl implements TeoriaDAO {
 
+	private ConexaoFactory fabrica;
+
+	public TeoriaDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+	
 	public void inserirTeoria(Teoria teoria) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(teoria);
@@ -45,7 +57,7 @@ public class TeoriaDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(teoria);
@@ -74,7 +86,7 @@ public class TeoriaDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(teoria);
@@ -96,22 +108,86 @@ public class TeoriaDAOImpl {
 			}
 		}
 	}
+	
+	public List<Teoria> recuperarTeorias () {
 
-	private SessionFactory conectarBanco() {
+		Session sessao = null;
+		List<Teoria> teorias = null;
 
-		Configuration configuracao = new Configuration();
+		try {
 
-		configuracao.addAnnotatedClass(modelo.entidades.jogo.Teoria.class);
-		configuracao.addAnnotatedClass(modelo.entidades.jogo.Fase.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		configuracao.configure("hibernate.cfg.xml");
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			CriteriaQuery<Teoria> criteria = construtor.createQuery(Teoria.class);
+			Root<Teoria> raizTeoria = criteria.from(Teoria.class);
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			criteria.select(raizTeoria);
 
-		return fabricaSessao;
+			teorias = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return teorias;
 	}
+	
+	public List<Teoria> recuperarTeoriasFase(Fase fase) {
+
+		Session sessao = null;
+		List<Teoria> teorias = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Teoria> criteria = construtor.createQuery(Teoria.class);
+			Root<Teoria> raizTeoria = criteria.from(Teoria.class);
+
+			Join<Teoria, Fase> juncaoFase = raizTeoria.join(Teoria_.fase);
+
+			ParameterExpression<Long> idFase = construtor.parameter(Long.class);
+			criteria.where(construtor.equal(juncaoFase.get(Teoria_.fase), idFase));
+
+			teorias = sessao.createQuery(criteria).setParameter(idFase, fase.getId()).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return teorias;
+	}
+
 }
