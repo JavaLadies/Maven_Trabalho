@@ -1,13 +1,13 @@
-import modelo.dao.usuario.UsuarioDAO;
-import modelo.dao.usuario.UsuarioDAOImpl;
-import modelo.entidade.estudantil.Usuario;
+import modelo.dao.contato.ContatoDAO;
+import modelo.dao.contato.ContatoDAOImpl;
+import modelo.entidade.estudantil.Contato;
 
 public class Principal {
 
 	public static void main(String[] args) {
 		
-		UsuarioDAO dao = new UsuarioDAOImpl();
+		ContatoDAO dao = new ContatoDAOImpl();
 		
-		dao.inserirUsuario(new Usuario("Brunabarbie33@gmail.com", "1234"));
+		dao.inserirContato(new Contato("robertinho23@gmail.com", 99999999, 33333333));
 	}
 }
