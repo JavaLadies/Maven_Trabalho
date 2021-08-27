@@ -2,6 +2,7 @@ package modelo.dao.endereco;
 
 import java.util.List;
 
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -163,10 +164,10 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 			CriteriaQuery<Endereco> criteria = construtor.createQuery(Endereco.class);
 			Root<Endereco> raizEndereco = criteria.from(Endereco.class);
 
-			Join<Endereco, Escola> juncaoEscola = raizEndereco.join(Endereco_.escola);
+			Join<Endereco, Escola> juncaoEscola = raizEndereco.join("escola");
 
 			ParameterExpression<Long> idEscola = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoEscola.get(Escola_.ID), idEscola));
+			criteria.where(construtor.equal(juncaoEscola.get("id"), idEscola));
 
 			endereco = sessao.createQuery(criteria).setParameter(idEscola, escola.getId()).getSingleResult();
 

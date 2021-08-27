@@ -164,10 +164,10 @@ public class JogoDAOImpl implements JogoDAO {
 			CriteriaQuery<Jogo> criteria = construtor.createQuery(Jogo.class);
 			Root<Jogo> raizJogo = criteria.from(Jogo.class);
 
-			Join<Jogo, Disciplina> juncaoDisciplina = raizJogo.join(Jogo_.disciplina);
+			Join<Jogo, Disciplina> juncaoDisciplina = raizJogo.join("disciplina");
 
 			ParameterExpression<Long> idDisciplina = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoDisciplina.get(Disciplina_.ID), idDisciplina));
+			criteria.where(construtor.equal(juncaoDisciplina.get("id"), idDisciplina));
 
 			jogo = sessao.createQuery(criteria).setParameter(idDisciplina, disciplina.getId()).getSingleResult();
 

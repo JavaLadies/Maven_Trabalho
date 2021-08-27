@@ -1,22 +1,32 @@
 package modelo.dao.opcao;
 
+import java.util.List;
+
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
 import modelo.entidades.jogo.Opcao;
+import modelo.factory.conexao.ConexaoFactory;
 
-public class OpcaoDAOImpl {
+public class OpcaoDAOImpl implements OpcaoDAO {
 
+	private ConexaoFactory fabrica;
+
+	public OpcaoDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+
+	
 	public void inserirOpcao(Opcao opcao) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(opcao);
@@ -45,7 +55,7 @@ public class OpcaoDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(opcao);
@@ -74,7 +84,7 @@ public class OpcaoDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(opcao);
@@ -97,21 +107,42 @@ public class OpcaoDAOImpl {
 		}
 	}
 	
-	private SessionFactory conectarBanco() {
+	public List<Opcao> recuperarOpcoes() {
 
-		Configuration configuracao = new Configuration();
+		Session sessao = null;
+		List<Opcao> opcoes = null;
 
-		configuracao.addAnnotatedClass(modelo.entidades.jogo.Opcao.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.cliente.Cliente.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+		try {
 
-		configuracao.configure("hibernate.cfg.xml");
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			CriteriaQuery<Opcao> criteria = construtor.createQuery(Opcao.class);
+			Root<Opcao> raizOpcao = criteria.from(Opcao.class);
 
-		return fabricaSessao;
+			criteria.select(raizOpcao);
+
+			opcoes = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return opcoes;
 	}
 }

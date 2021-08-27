@@ -12,7 +12,6 @@ public interface OpcaoDAO {
 	
 	void atualizarOpcao (Opcao opcao);
 	
-	List<Opcao> recuperarOpcao();
+	List<Opcao> recuperarOpcoes();
 	
-	List<Opcao> recuperarIsCorreta();
 }

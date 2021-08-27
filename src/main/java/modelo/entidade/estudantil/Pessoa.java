@@ -23,8 +23,8 @@ import modelo.excecoes.pessoa.CpfInvalidoException;
 
 @Entity
 @Table(name = "pessoa")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Pessoa extends Usuario implements Serializable {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Pessoa extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

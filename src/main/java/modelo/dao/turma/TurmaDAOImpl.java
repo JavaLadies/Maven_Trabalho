@@ -3,6 +3,7 @@ package modelo.dao.turma;
 import java.util.List;
 
 
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -10,12 +11,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
-import modelo.entidade.estudantil.Endereco;
 import modelo.entidade.estudantil.Escola;
 import modelo.entidade.estudantil.Turma;
 import modelo.factory.conexao.ConexaoFactory;
@@ -170,10 +166,10 @@ public class TurmaDAOImpl implements TurmaDAO{
 				CriteriaQuery<Turma> criteria = construtor.createQuery(Turma.class);
 				Root<Turma> raizTurma = criteria.from(Turma.class);
 				
-				Join<Turma, Escola> juncaoEscola = raizTurma.join(Turma_.escola);
+				Join<Turma, Escola> juncaoEscola = raizTurma.join("escola");
 				
 				ParameterExpression<Long> idEscola = construtor.parameter(Long.class);
-				criteria.where(construtor.equal(juncaoEscola.get(Escola_.turmas), idEscola));
+				criteria.where(construtor.equal(juncaoEscola.get("turmas"), idEscola));
 
 				turmas = sessao.createQuery(criteria).setParameter(idEscola, escola.getId()).getResultList();
 

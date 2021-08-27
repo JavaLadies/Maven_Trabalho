@@ -163,10 +163,10 @@ public class MundoDAOImpl implements MundoDAO {
 			CriteriaQuery<Mundo> criteria = construtor.createQuery(Mundo.class);
 			Root<Mundo> raizMundo = criteria.from(Mundo.class);
 
-			Join<Mundo, Jogo> juncaoJogo = raizMundo.join(Mundo_.jogo);
+			Join<Mundo, Jogo> juncaoJogo = raizMundo.join("jogo");
 
 			ParameterExpression<Long> idJogo = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoJogo.get(Jogo_.ID), idJogo));
+			criteria.where(construtor.equal(juncaoJogo.get("id"), idJogo));
 
 			mundos = sessao.createQuery(criteria).setParameter(idJogo, jogo.getId()).getResultList();
 

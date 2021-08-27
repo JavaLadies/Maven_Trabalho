@@ -1,22 +1,35 @@
 package modelo.dao.visitante;
 
+import java.util.List;
+
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
+import modelo.entidade.estudantil.Contato;
 import modelo.entidade.estudantil.Visitante;
+import modelo.factory.conexao.ConexaoFactory;
 
-public class VisitanteDAOImpl {
+public class VisitanteDAOImpl implements VisitanteDAO {
 
+	private ConexaoFactory fabrica;
+
+	public VisitanteDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+	
 	public void inserirVisitante(Visitante visitante) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(visitante);
@@ -45,7 +58,7 @@ public class VisitanteDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(visitante);
@@ -74,7 +87,7 @@ public class VisitanteDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(visitante);
@@ -96,22 +109,85 @@ public class VisitanteDAOImpl {
 			}
 		}
 	}
+	
+	public List<Visitante> recuperarVisitantes() {
 
-	private SessionFactory conectarBanco() {
+		Session sessao = null;
+		List<Visitante> visitantes = null;
 
-		Configuration configuracao = new Configuration();
+		try {
 
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Visitante.class);
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Contato.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		configuracao.configure("hibernate.cfg.xml");
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			CriteriaQuery<Visitante> criteria = construtor.createQuery(Visitante.class);
+			Root<Visitante> raizVisitante = criteria.from(Visitante.class);
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			criteria.select(raizVisitante);
 
-		return fabricaSessao;
+			visitantes = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return visitantes;
+	}
+
+	public List<Visitante> recuperarVisitantesContato(Contato contato) {
+
+		Session sessao = null;
+		List<Visitante> visitantes = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Visitante> criteria = construtor.createQuery(Visitante.class);
+			Root<Visitante> raizVisitante = criteria.from(Visitante.class);
+
+			Join<Visitante, Contato> juncaoContato = raizVisitante.join("contato");
+
+			ParameterExpression<Long> idContato = construtor.parameter(Long.class);
+			criteria.where(construtor.equal(juncaoContato.get("id"), idContato));
+
+			visitantes = sessao.createQuery(criteria).setParameter(idContato, contato.getId()).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return visitantes;
 	}
 }

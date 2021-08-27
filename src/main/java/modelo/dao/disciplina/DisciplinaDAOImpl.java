@@ -3,6 +3,7 @@ package modelo.dao.disciplina;
 import java.util.List;
 
 
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -10,10 +11,6 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 import modelo.entidade.estudantil.Disciplina;
 import modelo.entidade.estudantil.Turma;
@@ -168,10 +165,10 @@ public class DisciplinaDAOImpl implements DisciplinaDAO {
 			CriteriaQuery<Disciplina> criteria = construtor.createQuery(Disciplina.class);
 			Root<Disciplina> raizDisciplina = criteria.from(Disciplina.class);
 
-			Join<Disciplina, Turma> juncaoTurma = raizDisciplina.join(Disciplina_.turmas);
+			Join<Disciplina, Turma> juncaoTurma = raizDisciplina.join("turmas");
 
 			ParameterExpression<Long> idTurma = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoTurma.get(Turma_.ID), idTurma));
+			criteria.where(construtor.equal(juncaoTurma.get("id"), idTurma));
 
 			disciplinas = sessao.createQuery(criteria).setParameter(idTurma, turma.getId()).getResultList();
 

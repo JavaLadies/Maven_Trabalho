@@ -164,10 +164,10 @@ public class FaseDAOImpl implements FaseDAO {
 			CriteriaQuery<Fase> criteria = construtor.createQuery(Fase.class);
 			Root<Fase> raizFase = criteria.from(Fase.class);
 
-			Join<Fase, Mundo> juncaoMundo = raizFase.join(Fase_.mundo);
+			Join<Fase, Mundo> juncaoMundo = raizFase.join("mundo");
 
 			ParameterExpression<Long> idMundo = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoMundo.get(Mundo_.ID), idMundo));
+			criteria.where(construtor.equal(juncaoMundo.get("id"), idMundo));
 
 			fases = sessao.createQuery(criteria).setParameter(idMundo, mundo.getId()).getResultList();
 

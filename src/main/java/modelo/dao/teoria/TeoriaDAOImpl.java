@@ -163,10 +163,10 @@ public class TeoriaDAOImpl implements TeoriaDAO {
 			CriteriaQuery<Teoria> criteria = construtor.createQuery(Teoria.class);
 			Root<Teoria> raizTeoria = criteria.from(Teoria.class);
 
-			Join<Teoria, Fase> juncaoFase = raizTeoria.join(Teoria_.fase);
+			Join<Teoria, Fase> juncaoFase = raizTeoria.join("fase");
 
 			ParameterExpression<Long> idFase = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoFase.get(Teoria_.fase), idFase));
+			criteria.where(construtor.equal(juncaoFase.get("id"), idFase));
 
 			teorias = sessao.createQuery(criteria).setParameter(idFase, fase.getId()).getResultList();
 

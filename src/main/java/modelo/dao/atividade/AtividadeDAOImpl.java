@@ -3,6 +3,7 @@ package modelo.dao.atividade;
 import java.util.List;
 
 
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -10,10 +11,6 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 import modelo.entidades.jogo.Atividade;
 import modelo.entidades.jogo.Fase;
@@ -168,10 +165,10 @@ public class AtividadeDAOImpl implements AtividadeDAO {
 			CriteriaQuery<Atividade> criteria = construtor.createQuery(Atividade.class);
 			Root<Atividade> raizAtividade = criteria.from(Atividade.class);
 
-			Join<Atividade, Fase> juncaoFase = raizAtividade.join(Atividade_.fase);
+			Join<Atividade, Fase> juncaoFase = raizAtividade.join("fase");
 
 			ParameterExpression<Long> idFase = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoFase.get(Fase_.ID), idFase));
+			criteria.where(construtor.equal(juncaoFase.get("id"), idFase));
 
 			atividades = sessao.createQuery(criteria).setParameter(idFase, fase.getId()).getResultList();
 
