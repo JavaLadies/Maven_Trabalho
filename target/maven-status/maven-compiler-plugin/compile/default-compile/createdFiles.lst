@@ -1,0 +1,16 @@
+modelo\entidades\jogo\Jogo_.class
+modelo\entidade\estudantil\Turma_.class
+modelo\entidade\estudantil\Visitante_.class
+modelo\entidade\estudantil\Professor_.class
+modelo\entidades\jogo\Teoria_.class
+modelo\entidades\jogo\Opcao_.class
+modelo\entidades\jogo\Atividade_.class
+modelo\entidade\estudantil\Aluno_.class
+modelo\entidade\estudantil\Escola_.class
+modelo\entidade\estudantil\Disciplina_.class
+modelo\entidades\jogo\Mundo_.class
+modelo\entidade\estudantil\Pessoa_.class
+modelo\entidades\jogo\Fase_.class
+modelo\entidade\estudantil\Contato_.class
+modelo\entidade\estudantil\Usuario_.class
+modelo\entidade\estudantil\Endereco_.class
