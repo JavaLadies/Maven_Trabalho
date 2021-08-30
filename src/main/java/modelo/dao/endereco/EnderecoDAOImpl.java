@@ -2,24 +2,33 @@ package modelo.dao.endereco;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
 import modelo.entidade.estudantil.Endereco;
 import modelo.entidade.estudantil.Escola;
+import modelo.factory.conexao.ConexaoFactory;
 
 public class EnderecoDAOImpl implements EnderecoDAO {
 
+	private ConexaoFactory fabrica;
+
+	public EnderecoDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+	
 	public void inserirEndereco(Endereco endereco) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(endereco);
@@ -49,7 +58,7 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(endereco);
@@ -78,7 +87,7 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(endereco);
@@ -100,114 +109,86 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 			}
 		}
 	}
+	
+	public List<Endereco> recuperarEnderecos() {
 
-//	public List<Endereco> recuperarEnderecos() {
-//
-//		Session sessao = null;
-//		List<Endereco> enderecos = null;
-//
-//		try {
-//
-//			sessao = conectarBanco().openSession();
-//			sessao.beginTransaction();
-//
-//			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
-//
-//			CriteriaQuery<Endereco> criteria = construtor.createQuery(Endereco.class);
-//			Root<Endereco> raizEndereco = criteria.from(Endereco.class);
-//
-//			criteria.select(raizEndereco);
-//
-//			enderecos = sessao.createQuery(criteria).getResultList();
-//
-//			sessao.getTransaction().commit();
-//
-//		} catch (Exception sqlException) {
-//
-//			sqlException.printStackTrace();
-//
-//			if (sessao.getTransaction() != null) {
-//				sessao.getTransaction().rollback();
-//			}
-//
-//		} finally {
-//
-//			if (sessao != null) {
-//				sessao.close();
-//			}
-//		}
-//
-//		return enderecos;
-//
-//	}
-//
-//	public List<Endereco> recuperarEnderecosCliente(Cliente cliente) {
-//
-//		Session sessao = null;
-//		List<Endereco> enderecos = null;
-//
-//		try {
-//
-//			sessao = conectarBanco().openSession();
-//			sessao.beginTransaction();
-//
-//			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
-//
-//			CriteriaQuery<Endereco> criteria = construtor.createQuery(Endereco.class);
-//			Root<Endereco> raizEndereco = criteria.from(Endereco.class);
-//
-//			Join<Endereco, Cliente> juncaoCliente = raizEndereco.join(Endereco_.clientes);
-//
-//			ParameterExpression<String> cpfCliente = construtor.parameter(String.class);
-//			criteria.where(construtor.equal(juncaoCliente.get(Cliente_.CPF), cpfCliente));
-//
-//			enderecos = sessao.createQuery(criteria).setParameter(cpfCliente, cliente.getCpf()).getResultList();
-//
-//			sessao.getTransaction().commit();
-//
-//		} catch (Exception sqlException) {
-//
-//			sqlException.printStackTrace();
-//
-//			if (sessao.getTransaction() != null) {
-//				sessao.getTransaction().rollback();
-//			}
-//
-//		} finally {
-//
-//			if (sessao != null) {
-//				sessao.close();
-//			}
-//		}
-//
-//		return enderecos;
-//	}
+		Session sessao = null;
+		List<Endereco> enderecos = null;
 
-	private SessionFactory conectarBanco() {
+		try {
 
-		Configuration configuracao = new Configuration();
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Endereco.class);
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Escola.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(modelo.entidade.pedido.Pedido.class);
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		configuracao.configure("hibernate.cfg.xml");
+			CriteriaQuery<Endereco> criteria = construtor.createQuery(Endereco.class);
+			Root<Endereco> raizEndereco = criteria.from(Endereco.class);
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			criteria.select(raizEndereco);
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			enderecos = sessao.createQuery(criteria).getResultList();
 
-		return fabricaSessao;
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return enderecos;
 	}
 
-public List<Endereco> recuperarEnderecos() {
-	// TODO Auto-generated method stub
-	return null;
+	public Endereco recuperarEnderecoEscola(Escola escola) {
+
+		Session sessao = null;
+		Endereco endereco = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Endereco> criteria = construtor.createQuery(Endereco.class);
+			Root<Endereco> raizEndereco = criteria.from(Endereco.class);
+
+			Join<Endereco, Escola> juncaoEscola = raizEndereco.join("escola");
+
+			ParameterExpression<Long> idEscola = construtor.parameter(Long.class);
+			criteria.where(construtor.equal(juncaoEscola.get("id"), idEscola));
+
+			endereco = sessao.createQuery(criteria).setParameter(idEscola, escola.getId()).getSingleResult();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return endereco;
+	}
 }
 
-public List<Endereco> recuperarEnderecoEscola(Escola escola) {
-	// TODO Auto-generated method stub
-	return null;
-}
-}

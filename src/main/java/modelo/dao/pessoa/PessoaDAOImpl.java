@@ -2,6 +2,14 @@ package modelo.dao.pessoa;
 
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+>>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,7 +19,7 @@ import org.hibernate.Session;
 import modelo.entidade.estudantil.Pessoa;
 import modelo.factory.conexao.ConexaoFactory;
 
-public class PessoaDAOImpl {
+public class PessoaDAOImpl implements PessoaDAO {
 
 	private ConexaoFactory fabrica;
 
@@ -110,6 +118,7 @@ public class PessoaDAOImpl {
 
 		Session sessao = null;
 		List<Pessoa> pessoas = null;
+<<<<<<< HEAD
 
 		try {
 
@@ -142,6 +151,40 @@ public class PessoaDAOImpl {
 			}
 		}
 
+=======
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Pessoa> criteria = construtor.createQuery(Pessoa.class);
+			Root<Pessoa> raizPessoa = criteria.from(Pessoa.class);
+
+			criteria.select(raizPessoa);
+
+			pessoas = sessao.createQuery(criteria).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+>>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 		return pessoas;
 	}
 	

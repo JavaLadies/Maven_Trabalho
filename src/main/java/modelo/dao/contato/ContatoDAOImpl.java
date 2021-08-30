@@ -2,24 +2,32 @@ package modelo.dao.contato;
 
 import java.util.List;
 
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 import modelo.entidade.estudantil.Contato;
-import modelo.entidade.estudantil.Pessoa;
+import modelo.factory.conexao.ConexaoFactory;
 
 public class ContatoDAOImpl implements ContatoDAO {
 
+	private ConexaoFactory fabrica;
+
+	public ContatoDAOImpl() {
+		fabrica = new ConexaoFactory();
+	}
+
+	
 	public void inserirContato(Contato contato) {
 
 		Session sessao = null;
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(contato);
@@ -48,7 +56,7 @@ public class ContatoDAOImpl implements ContatoDAO {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.delete(contato);
@@ -77,7 +85,7 @@ public class ContatoDAOImpl implements ContatoDAO {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.update(contato);
@@ -100,112 +108,42 @@ public class ContatoDAOImpl implements ContatoDAO {
 		}
 	}
 
-//	public List<Contato> recuperarContatos() {
-//
-//		Session sessao = null;
-//		List<Contato> contatos = null;
-//
-//		try {
-//
-//			sessao = conectarBanco().openSession();
-//			sessao.beginTransaction();
-//
-//			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
-//
-//			CriteriaQuery<Contato> criteria = construtor.createQuery(Contato.class);
-//			Root<Contato> raizContato = criteria.from(Contato.class);
-//
-//			criteria.select(raizContato);
-//
-//			contatos = sessao.createQuery(criteria).getResultList();
-//
-//			sessao.getTransaction().commit();
-//
-//		} catch (Exception sqlException) {
-//
-//			sqlException.printStackTrace();
-//
-//			if (sessao.getTransaction() != null) {
-//				sessao.getTransaction().rollback();
-//			}
-//
-//		} finally {
-//
-//			if (sessao != null) {
-//				sessao.close();
-//			}
-//		}
-//
-//		return contatos;
-//	}
+	public List<Contato> recuperarContatos() {
 
-//	public Contato recuperarContatoCliente(Cliente cliente) {
-//
-//		Session sessao = null;
-//		Contato contato = null;
-//
-//		try {
-//
-//			sessao = conectarBanco().openSession();
-//			sessao.beginTransaction();
-//
-//			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
-//
-//			CriteriaQuery<Contato> criteria = construtor.createQuery(Contato.class);
-//			Root<Contato> raizContato = criteria.from(Contato.class);
-//
-//			Join<Contato, Cliente> juncaoCliente = raizContato.join(Contato_.cliente);
-//
-//			ParameterExpression<String> cpfCliente = construtor.parameter(String.class);
-//			criteria.where(construtor.equal(juncaoCliente.get(Cliente_.CPF), cpfCliente));
-//
-//			contato = sessao.createQuery(criteria).setParameter(cpfCliente, cliente.getCpf()).getSingleResult();
-//
-//			sessao.getTransaction().commit();
-//
-//		} catch (Exception sqlException) {
-//
-//			sqlException.printStackTrace();
-//
-//			if (sessao.getTransaction() != null) {
-//				sessao.getTransaction().rollback();
-//			}
-//
-//		} finally {
-//
-//			if (sessao != null) {
-//				sessao.close();
-//			}
-//		}
-//
-//		return contato;
-//	}
+		Session sessao = null;
+		List<Contato> contatos = null;
 
-	private SessionFactory conectarBanco() {
+		try {
 
-		Configuration configuracao = new Configuration();
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
 
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Contato.class);
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Pessoa.class);
-//		configuracao.addAnnotatedClass(.modelo.entidade.endereco.Endereco.class);
-//		configuracao.addAnnotatedClass(.modelo.entidade.pedido.Pedido.class);
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-		configuracao.configure("hibernate.cfg.xml");
+			CriteriaQuery<Contato> criteria = construtor.createQuery(Contato.class);
+			Root<Contato> raizContato = criteria.from(Contato.class);
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
+			criteria.select(raizContato);
 
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+			contatos = sessao.createQuery(criteria).getResultList();
 
-		return fabricaSessao;
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return contatos;
 	}
-
-public List<Contato> recuperarContatos() {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public Contato recuperarContatoPessoa(Pessoa pessoa) {
-	// TODO Auto-generated method stub
-	return null;
-}
 }

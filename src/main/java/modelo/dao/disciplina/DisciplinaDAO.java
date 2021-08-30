@@ -3,7 +3,6 @@ package modelo.dao.disciplina;
 import java.util.List;
 
 import modelo.entidade.estudantil.Disciplina;
-import modelo.entidade.estudantil.Professor;
 import modelo.entidade.estudantil.Turma;
 
 public interface DisciplinaDAO {
@@ -16,7 +15,6 @@ public interface DisciplinaDAO {
 	
 	List<Disciplina> recuperarDisciplinas();
 	
-	List<Disciplina> recuperarDisciplinaTurma(Turma turma);
+	List<Disciplina> recuperarDisciplinasTurma(Turma turma);
 	
-	List<Disciplina> recuperarDisciplinaProfessor(Professor professor);
 } 

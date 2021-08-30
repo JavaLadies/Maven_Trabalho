@@ -1,9 +1,7 @@
 package modelo.dao.usuario;
 
 import java.util.List;
-
 import modelo.entidade.estudantil.Usuario;
-import modelo.entidade.estudantil.Visitante;
 
 public interface UsuarioDAO {
 
@@ -11,9 +9,8 @@ public interface UsuarioDAO {
 	
 	void deletarUsuario (Usuario usuario);
 	
-	void atualizarUsuario (Usuario usuario, String novoLogin);
+	void atualizarUsuario (Usuario usuario);
 	
 	List<Usuario> recuperarUsuarios();
 	
-	List<Usuario> recuperarUsuariosVisitantes(Visitante visitante);
 }

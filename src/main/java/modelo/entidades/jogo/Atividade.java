@@ -2,13 +2,15 @@ package modelo.entidades.jogo;
 
 import java.io.Serializable;
 
+
 import java.util.ArrayList;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +36,7 @@ public class Atividade implements Serializable {
 	@Column(name = "nome_atividade", length = 20, nullable = false, unique = false)
 	private String nome;
 	
-	@Column(name = "enunciado_fase", length = 200, nullable = false, unique = false)
+	@Column(name = "enunciado_atividade", length = 200, nullable = false, unique = false)
 	private String enunciado;
 	
 	//Uma atividade terá uma fase (Uma fase terá muitas atividades)
@@ -43,6 +45,8 @@ public class Atividade implements Serializable {
 	private Fase fase;
 	
 	//ENUM
+	@Column(name = "situacao_atividade", nullable = false, unique = false)
+	@Enumerated(EnumType.STRING)
 	private Situacao status;
 	
 	//Uma atividade tem várias opções.

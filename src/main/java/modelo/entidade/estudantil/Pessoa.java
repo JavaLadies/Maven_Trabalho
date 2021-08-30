@@ -1,6 +1,7 @@
 package modelo.entidade.estudantil;
 
 import java.io.Serializable;
+
 import java.util.InputMismatchException;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import modelo.excecoes.LoginInvalidoException;
@@ -21,8 +23,8 @@ import modelo.excecoes.pessoa.CpfInvalidoException;
 
 @Entity
 @Table(name = "pessoa")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Pessoa extends Usuario implements Serializable {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Pessoa extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +35,8 @@ public class Pessoa extends Usuario implements Serializable {
 	@Column(name = "cpf_pessoa", length = 14, nullable = false, unique = true)
 	private String cpf;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@MapsId
 	@JoinColumn(name = "id_contato")
 	private Contato contato;
 

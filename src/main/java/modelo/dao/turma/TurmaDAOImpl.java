@@ -3,6 +3,10 @@ package modelo.dao.turma;
 import java.util.List;
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -10,12 +14,11 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
+<<<<<<< HEAD
 import modelo.entidade.estudantil.Endereco;
+=======
+>>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 import modelo.entidade.estudantil.Escola;
 import modelo.entidade.estudantil.Turma;
 import modelo.factory.conexao.ConexaoFactory;
@@ -170,12 +173,12 @@ public class TurmaDAOImpl implements TurmaDAO{
 				CriteriaQuery<Turma> criteria = construtor.createQuery(Turma.class);
 				Root<Turma> raizTurma = criteria.from(Turma.class);
 				
-				Join<Turma, Escola> juncaoEscola = raizTurma.join(Turma_.escola);
+				Join<Turma, Escola> juncaoEscola = raizTurma.join("escola");
 				
 				ParameterExpression<Long> idEscola = construtor.parameter(Long.class);
-				criteria.where(construtor.equal(juncaoEscola.get(Escola_.turmas), cpfCliente));
+				criteria.where(construtor.equal(juncaoEscola.get("turmas"), idEscola));
 
-				enderecos = sessao.createQuery(criteria).setParameter(cpfCliente, cliente.getCpf()).getResultList();
+				turmas = sessao.createQuery(criteria).setParameter(idEscola, escola.getId()).getResultList();
 
 				sessao.getTransaction().commit();
 
@@ -194,6 +197,6 @@ public class TurmaDAOImpl implements TurmaDAO{
 				}
 			}
 
-			return enderecos;
+			return turmas;
 		}
 }

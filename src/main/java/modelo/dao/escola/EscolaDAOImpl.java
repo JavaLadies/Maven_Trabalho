@@ -145,5 +145,8 @@ public class EscolaDAOImpl implements EscolaDAO {
 
 		return escolas;
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 }

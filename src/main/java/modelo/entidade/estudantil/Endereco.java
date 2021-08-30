@@ -2,11 +2,10 @@ package modelo.entidade.estudantil;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -28,23 +27,22 @@ public class Endereco implements Serializable{
 
 	//O endereco vai guardar o id da escola.
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_escola")
 	private Long id;
 	
-	@Column(name = "nome_endereco", length = 50, nullable = false)
+	@Column(name = "nome_endereco", length = 50, nullable = false, unique = false)
 	private String nome;
 	
-	@Column(name = "complemento_endereco", length = 45, nullable = true)
+	@Column(name = "complemento_endereco", length = 45, nullable = true, unique = false)
 	private String complemento;
 	
-	@Column(name = "numero_endereco", nullable = false, unique = true)
+	@Column(name = "numero_endereco", nullable = false, unique = false)
 	private short numero;
 	
-	@Column(name = "cidade_endereco", length = 25, nullable = false, unique = true)
+	@Column(name = "cidade_endereco", length = 25, nullable = false, unique = false)
 	private String cidade;
 	
-	@Column(name = "estado_endereco", length = 25, nullable = false, unique = true)
+	@Column(name = "estado_endereco", length = 25, nullable = false, unique = false)
 	private String estado;
 	
 	@OneToOne(fetch = FetchType.LAZY)

@@ -13,7 +13,7 @@ public interface VisitanteDAO {
 	
 	void atualizarVisitante (Visitante visitante);
 	
-	List<Visitante> recuperarVisiantes();
+	List<Visitante> recuperarVisitantes();
 	
-	List<Visitante> recuperarVisitanteContato(Contato contato);
+	List<Visitante> recuperarVisitantesContato(Contato contato);
 }

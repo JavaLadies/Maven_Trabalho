@@ -2,8 +2,8 @@ package modelo.dao.atividade;
 
 import java.util.List;
 
-import modelo.entidade.estudantil.Aluno;
 import modelo.entidades.jogo.Atividade;
+import modelo.entidades.jogo.Fase;
 
 public interface AtividadeDAO {
 	
@@ -15,5 +15,5 @@ public interface AtividadeDAO {
 	
 	List<Atividade> recuperarAtividades();
 
-	List<Atividade> recuperarAtividadesAluno(Aluno aluno);
+	List<Atividade> recuperarAtividadesFase(Fase fase);
 }

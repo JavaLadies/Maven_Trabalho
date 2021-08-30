@@ -15,5 +15,5 @@ public interface TurmaDAO {
 	
 	List<Turma> recuperarTurmas();
 
-	List<Turma> recuperarTurmaEscola(Escola escola);
+	List<Turma> recuperarTurmasEscola(Escola escola);
 }

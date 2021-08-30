@@ -14,7 +14,7 @@ import modelo.entidades.jogo.Fase;
 import modelo.entidades.jogo.Teoria;
 import modelo.factory.conexao.ConexaoFactory;
 
-public class TeoriaDAOImpl {
+public class TeoriaDAOImpl implements TeoriaDAO {
 
 	private ConexaoFactory fabrica;
 
@@ -147,8 +147,13 @@ public class TeoriaDAOImpl {
 
 		return teorias;
 	}
+<<<<<<< HEAD
 
 	public List<Teoria> recuperarPedidosCliente(Fase fase) {
+=======
+	
+	public List<Teoria> recuperarTeoriasFase(Fase fase) {
+>>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 
 		Session sessao = null;
 		List<Teoria> teorias = null;
@@ -162,6 +167,7 @@ public class TeoriaDAOImpl {
 
 			CriteriaQuery<Teoria> criteria = construtor.createQuery(Teoria.class);
 			Root<Teoria> raizTeoria = criteria.from(Teoria.class);
+<<<<<<< HEAD
 
 			Join<Teoria, Fase> juncaoFase = raizTeoria.join(Teoria_.fase);
 
@@ -174,6 +180,20 @@ public class TeoriaDAOImpl {
 
 		} catch (Exception sqlException) {
 
+=======
+
+			Join<Teoria, Fase> juncaoFase = raizTeoria.join("fase");
+
+			ParameterExpression<Long> idFase = construtor.parameter(Long.class);
+			criteria.where(construtor.equal(juncaoFase.get("id"), idFase));
+
+			teorias = sessao.createQuery(criteria).setParameter(idFase, fase.getId()).getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+>>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 			sqlException.printStackTrace();
 
 			if (sessao.getTransaction() != null) {
@@ -189,4 +209,5 @@ public class TeoriaDAOImpl {
 
 		return teorias;
 	}
+
 }
