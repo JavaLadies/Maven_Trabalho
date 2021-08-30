@@ -3,10 +3,7 @@ package modelo.dao.turma;
 import java.util.List;
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -15,10 +12,6 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 
-<<<<<<< HEAD
-import modelo.entidade.estudantil.Endereco;
-=======
->>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 import modelo.entidade.estudantil.Escola;
 import modelo.entidade.estudantil.Turma;
 import modelo.factory.conexao.ConexaoFactory;
