@@ -2,20 +2,13 @@ package modelo.dao.pessoa;
 
 import java.util.List;
 
-<<<<<<< HEAD
-=======
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
-import org.hibernate.Session;
->>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+
 import modelo.entidade.estudantil.Pessoa;
 import modelo.factory.conexao.ConexaoFactory;
 
@@ -118,7 +111,6 @@ public class PessoaDAOImpl implements PessoaDAO {
 
 		Session sessao = null;
 		List<Pessoa> pessoas = null;
-<<<<<<< HEAD
 
 		try {
 
@@ -151,8 +143,6 @@ public class PessoaDAOImpl implements PessoaDAO {
 			}
 		}
 
-=======
-
 		try {
 
 			sessao = fabrica.getConexao().openSession();
@@ -183,8 +173,6 @@ public class PessoaDAOImpl implements PessoaDAO {
 				sessao.close();
 			}
 		}
-
->>>>>>> ff20960142f5fb821620a0bb9d62e6170b69268d
 		return pessoas;
 	}
 	
