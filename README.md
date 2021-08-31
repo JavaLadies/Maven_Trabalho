@@ -17,6 +17,6 @@
 **Fazer Commit no GitDesktop**
 Sempre que commitar, lembrar de fazer **push.**
 
-**Não comitar arquivos terminados com os prefixos abaixo:**
+**Não comitar arquivos terminados com os prefixos:**
   *manifest.mf*
   *pom.properties*
