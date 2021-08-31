@@ -1,0 +1,38 @@
+  body{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  body {
+    background-color: rgb(226, 221, 198);
+}
+  body{
+      max-width: 400em;
+      margin: 2em auto;
+  }
+  main{
+      text-align: center;
+      font-size: 2em;
+  }
+  button{
+      font-family: inherit;
+      cursor:  pointer;
+  }
+  .botao{
+      display: inline-block;
+      margin: 1em;
+      padding: 0.5em 1em;
+      text-decoration: none;
+      background: #20b2aa;
+      color: rgba(250, 213, 7, 0.925);
+      border: 0;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+      border-radius: o.5em;
+      box-shadow: 2px 3px 0 1px #16706c
+    
+
+  }
+  .botao:active{
+      box-shadow: 0 0 0 0 #20b2aa, inset 3px 3px 3px #20b2aa;
+      transform: translate(3px, 3px);
+  }
+  
+  
