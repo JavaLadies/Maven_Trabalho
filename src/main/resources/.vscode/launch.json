@@ -7,9 +7,8 @@
         {
             "type": "pwa-chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "name": "Open cadastros.html",
+            "file": "c:\\Users\\luana.babel\\Documents\\Maven_Trabalho\\src\\main\\resources\\telas\\html\\cadastros.html"
         }
     ]
 }
