@@ -1,4 +1,4 @@
-kaboom({
+/*kaboom({
     global: true,
     fullscreen: true,
     scale: 2,
@@ -26,4 +26,4 @@ screen("jogo", () => {
         'x' : [sprite('blooco'), solid()]
     }
 const jogoLevel = 
-})
+})*/
