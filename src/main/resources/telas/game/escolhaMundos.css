@@ -1,0 +1,19 @@
+.mundos {
+    display: inline-flex
+  }
+h2{
+    text-align: center;
+    margin-top: 3%;
+}
+.mundoPOO{
+    width: 363px;
+    height: 440px;
+    margin-top: 6%;
+  }
+
+  .mundoLOGICA {
+    width: 437px;
+    margin-top: 6%;
+    margin-left: 30%;
+    height: auto;
+  }
