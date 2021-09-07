@@ -5,7 +5,7 @@
 }
 
 body, h1{
-  background-color:#00b5cc;
+  background-color:#01ABAA;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -46,7 +46,7 @@ ul li label{
 }
 
 button {
-  background-color:#ffa502;
+  background-color:#FEDC3D;
   border:none;
   color:white;
   cursor:pointer;
@@ -55,8 +55,9 @@ button {
   font-size:1.3rem;
   width:100%;
   padding:1.3rem;
+  border-radius:10px;
 }
 
 button:hover{
-  background-color:#ff6348;
+  background-color:#C688FF;
 }
