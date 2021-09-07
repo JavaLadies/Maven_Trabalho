@@ -27,7 +27,7 @@ const quizData= [
 	  a: 'import java.util.Scanner; Scanner scanner = new Scanner(System.in);',
 	  b: 'import java.util.Scanner; Scanner Leitor = new Scanner(System.in);',
 	  c: 'import java.util.scanner; Scanner scanner = new Scanner(System.in);',
-	  d: '10import java.util.Scanner; Leitor scanner = new Scanner(System.in);90',
+	  d: 'import java.util.Scanner; Leitor scanner = new Scanner(System.in);90',
 	  correct: 'c',
 	},
 	

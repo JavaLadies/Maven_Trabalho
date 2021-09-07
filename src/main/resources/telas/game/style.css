@@ -1,16 +1,9 @@
-.content {
-    margin-top: 54px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+*{
+	box-sizing: border-box;
 }
 
-.header {
-    padding: 15px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9999;
-}
-
-<<<<<<< HEAD:src/main/resources/telas/game/style.css
 body, h1{
   background-color:#01ABAA;
   display:flex;
@@ -19,55 +12,39 @@ body, h1{
 	font-family: "Poppins", sans-serif;
 	margin:0;
   min-height:100vh;
-=======
-.left-title {
-    width: 80px;
-    color: #FFF;
-    font-size: 18px;
-    float: left;
->>>>>>> e8ebc28e1c506728e1b15564143424b1c7557d9f:src/main/resources/telas/game/game.css
 }
 
-.right-title {
-    width: 150px;
-    text-align: right;
-    float: right;
-    color: #FFF;
+.quiz-container{
+  background-color:#fff;
+  border-radius:10px;
+  box-shadow:0 0 10px 2px rgba(100,100,100,100.1);
+  width:600px;
+  max-width:100%;
 }
 
-.quiz-body {
-    margin-top: 15px;
-    padding-bottom: 50px;
+.quiz-header{
+  padding:2rem;
 }
 
-.option-block-container {
-    margin-top: 20px;
-    max-width: 420px;
+h2{
+  margin:0;
 }
 
-.option-block {
-    padding: 10px;
-    background: aliceblue;
-    border: 1px solid #84c5fe;
-    margin-bottom: 10px;
-    cursor: pointer;
+
+ul{
+  list-style-type:none;
+  padding:0;
 }
 
-.result-question {
-    font-weight: bold;
+ul li{
+  font-size: 1.2rem;
+   margin:1rem 0;
 }
 
-.c-wrong {
-    margin-left: 20px;
-    color: #FF0000;
+ul li label{
+  cursor:pointer;
 }
 
-.c-correct {
-    margin-left: 20px;
-    color: green;
-}
-
-<<<<<<< HEAD:src/main/resources/telas/game/style.css
 button {
   background-color:#FEDC3D;
   border:none;
@@ -83,16 +60,4 @@ button {
 
 button:hover{
   background-color:#C688FF;
-=======
-.last-row {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 25px;
-    margin-bottom: 25px;
-}
-
-.res-header {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
->>>>>>> e8ebc28e1c506728e1b15564143424b1c7557d9f:src/main/resources/telas/game/game.css
 }
