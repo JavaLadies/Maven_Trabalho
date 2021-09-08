@@ -1,0 +1,69 @@
+#fases img {
+    width: 100px;
+    height: 100px;
+}
+
+#fases {
+    display: inline-flex;
+}
+
+
+.fase1 {
+    margin-top: 5%;
+    margin-left: 15%;
+    width: 100px;
+    height: 100px;
+}
+
+.fase2 {
+    margin-top: 5%;
+    margin-left:25%;
+    width: 100px;
+    height: 100px;
+}
+
+.fase3 {
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 100px;
+    height: 100px;
+}
+
+.fase4 {
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 100px;
+    height: 100px;
+}
+
+.fase5 {
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 100px;
+    height: 100px;
+}
+
+.fase6 {
+    width: 100px;
+    height: 100px;
+}
+
+.fase7 {
+    width: 100px;
+    height: 100px;
+}
+
+.fase8 {
+    width: 100px;
+    height: 100px;
+}
+
+.fase9 {
+    width: 100px;
+    height: 100px;
+}
+
+.fase10 {
+    width: 100px;
+    height: 100px;
+}
