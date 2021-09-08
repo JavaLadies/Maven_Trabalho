@@ -7,63 +7,64 @@
     display: inline-flex;
 }
 
-
-.fase1 {
-    margin-top: 5%;
-    margin-left: 15%;
+#fases2 img {
     width: 100px;
     height: 100px;
+    display: inline-flex;
+}
+
+#fases3 img {
+    width: 100px;
+    height: 100px;
+    display: inline-flex;
+}
+
+.fase1 {
+    margin-top: 5vh;
+    margin-left: 10vw;
 }
 
 .fase2 {
-    margin-top: 5%;
-    margin-left:25%;
-    width: 100px;
-    height: 100px;
+    margin-top: 5vh;
+    margin-left: 20vw;
 }
 
 .fase3 {
-    margin-top: 5%;
-    margin-left: 25%;
-    width: 100px;
-    height: 100px;
+    margin-top: 5vh;
+    margin-left: 20vw;
 }
 
 .fase4 {
-    margin-top: 5%;
-    margin-left: 25%;
-    width: 100px;
-    height: 100px;
+    margin-top: 5vh;
+    margin-left: 20vw;
 }
 
 .fase5 {
-    margin-top: 5%;
-    margin-left: 25%;
-    width: 100px;
-    height: 100px;
+    margin-top: 20vh;
+    margin-left: 25vw;
 }
 
 .fase6 {
-    width: 100px;
-    height: 100px;
+    margin-top: 20vh;
+    margin-right: 10vw;
 }
 
 .fase7 {
-    width: 100px;
-    height: 100px;
+    margin-top: 20vh;
+    margin-left: 10vw;
 }
 
 .fase8 {
-    width: 100px;
-    height: 100px;
+    margin-top: 20vh;
+    margin-left: 10vw;
 }
 
 .fase9 {
-    width: 100px;
-    height: 100px;
+    margin-top: 5%;
+    margin-left: 10vw;
 }
 
 .fase10 {
-    width: 100px;
-    height: 100px;
+    margin-top: 5%;
+    margin-left: 10vw;
 }
