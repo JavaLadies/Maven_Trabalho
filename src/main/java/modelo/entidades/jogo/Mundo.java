@@ -49,7 +49,7 @@ public class Mundo  implements Serializable {
 	
 	//Um mundo tem um jogo
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_mundo")
+	@JoinColumn(name = "id_jogo")
 	private Jogo jogo;
 
 	public Mundo() {}
