@@ -26,9 +26,10 @@ public class Jogo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	//O jogo vai guardar o id da sua disciplina.
+	
 	@Id
-	@Column(name = "id_disciplina")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_jogo")
 	private Long id;
 	
 	//Um jogo tem vários mundos.
@@ -46,8 +47,7 @@ public class Jogo implements Serializable {
 	
 	public Jogo() {}
 	
-	public Jogo(Long id, float media, Disciplina disciplina) {
-		setId(id);
+	public Jogo(float media, Disciplina disciplina) {
 		setDisciplina(disciplina);
 		setMedia(media);
 	}

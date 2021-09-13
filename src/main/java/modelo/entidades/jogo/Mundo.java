@@ -54,10 +54,10 @@ public class Mundo  implements Serializable {
 
 	public Mundo() {}
 	
-	public Mundo(Long id, String nome, Situacao status) throws NomeInvalidoException {
-		setId(id);
+	public Mundo(String nome, Situacao status, float media) { //throws NomeInvalidoException
 		setNome(nome);
 		setStatus(status);
+		setMedia(media);
 	}
 
 	public Long getId() {
@@ -72,10 +72,10 @@ public class Mundo  implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) throws NomeInvalidoException {
+	public void setNome(String nome) { //throws NomeInvalidoException 
 
-		if (nome.isEmpty())
-			throw new NomeInvalidoException("Nome inválido: Não pode ser vazio!");
+		//if (nome.isEmpty())
+		//	throw new NomeInvalidoException("Nome inválido: Não pode ser vazio!");
 
 		this.nome = nome;
 	}
@@ -111,7 +111,7 @@ public class Mundo  implements Serializable {
 	}
 
 	public void desbloquearMundo() {
-		setStatus(status.EM_ANDAMENTO);
+		setStatus(status.DESBLOQUEADO);
 	}
 
 	public void concluirMundo() {

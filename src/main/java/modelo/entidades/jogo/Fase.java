@@ -58,8 +58,7 @@ public class Fase implements Serializable {
 
 	public Fase() {}
 	
-	public Fase(Long id, String nome, Mundo mundo, Situacao status) throws NomeInvalidoException {
-		setId(id);
+	public Fase( String nome, Mundo mundo, Situacao status) { //throws NomeInvalidoException 
 		setNome(nome);
 		setMundo(mundo);
 		setStatus(status);
@@ -77,10 +76,10 @@ public class Fase implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) throws NomeInvalidoException {
+	public void setNome(String nome) { // throws NomeInvalidoException 
 
-		if (nome.isEmpty())
-			throw new NomeInvalidoException("Nome inválido: Não pode ser vazio!");
+		//if (nome.isEmpty())
+		//	throw new NomeInvalidoException("Nome inválido: Não pode ser vazio!");
 
 		this.nome = nome;
 	}
@@ -130,7 +129,7 @@ public class Fase implements Serializable {
 	}
 	
 	public void desbloquearFase () {
-		setStatus(status.EM_ANDAMENTO);
+		setStatus(status.DESBLOQUEADO);
 	}
 	
 	public void concluirFase () {
