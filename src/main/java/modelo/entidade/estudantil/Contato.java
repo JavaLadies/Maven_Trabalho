@@ -72,7 +72,7 @@ public class Contato implements Serializable {
 	}
 
 	public void setCelular(int celular) {
-
+		this.celular = celular;
 	}
 
 	public int getTelefone() {
