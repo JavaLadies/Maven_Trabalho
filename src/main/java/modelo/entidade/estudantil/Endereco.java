@@ -3,9 +3,12 @@ package modelo.entidade.estudantil;
 import java.io.Serializable;
 
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -27,7 +30,8 @@ public class Endereco implements Serializable{
 
 	//O endereco vai guardar o id da escola.
 	@Id
-	@Column(name = "id_escola")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_endereco")
 	private Long id;
 	
 	@Column(name = "nome_endereco", length = 50, nullable = false, unique = false)
@@ -52,9 +56,8 @@ public class Endereco implements Serializable{
 
 	public Endereco() {}
 	
-	public Endereco(Long id, String nome, String tipo, String complemento, short numero, String cidade, String estado)
-			throws NomeInvalidoException, NumeroInvalidoException, CidadeInvalidaException, EstadoInvalidoException {
-		setId(id);
+	public Endereco(String nome, String complemento, short numero, String cidade, String estado) {
+			//throws NomeInvalidoException, NumeroInvalidoException, CidadeInvalidaException, EstadoInvalidoException 
 		setNome(nome);
 		setComplemento(complemento);
 		setNumero(numero);
@@ -74,15 +77,15 @@ public class Endereco implements Serializable{
 		return nome;
 	}
 
-	public void setNome(String nome) throws NomeInvalidoException {
+	public void setNome(String nome) { //throws NomeInvalidoException
 
-		if (nome.isEmpty())
-			throw new NomeInvalidoException("Não pode ser vazio!");
+		//if (nome.isEmpty())
+		//	throw new NomeInvalidoException("Não pode ser vazio!");
 
-		for (char c : nome.toCharArray()) {
-			if (!Character.isLetter(c) && !Character.isSpaceChar(c))
-				throw new NomeInvalidoException("Insira apenas letras!");
-		}
+		//for (char c : nome.toCharArray()) {
+		//	if (!Character.isLetter(c) && !Character.isSpaceChar(c))
+		//		throw new NomeInvalidoException("Insira apenas letras!");
+		//}
 
 		this.nome = nome;
 	}
@@ -100,9 +103,9 @@ public class Endereco implements Serializable{
 		return numero;
 	}
 
-	public void setNumero(short numero) throws NumeroInvalidoException {
-		if (numero < 0)
-			throw new NumeroInvalidoException("Não pode ser negativo!");
+	public void setNumero(short numero) { //throws NumeroInvalidoException 
+		//if (numero < 0)
+		//	throw new NumeroInvalidoException("Não pode ser negativo!");
 		this.numero = numero;
 	}
 
@@ -110,15 +113,15 @@ public class Endereco implements Serializable{
 		return cidade;
 	}
 
-	public void setCidade(String cidade) throws CidadeInvalidaException {
+	public void setCidade(String cidade) { //throws CidadeInvalidaException 
 
-		if (cidade.isEmpty())
-			throw new CidadeInvalidaException("Não pode ser vazio!");
+		//if (cidade.isEmpty())
+		//	throw new CidadeInvalidaException("Não pode ser vazio!");
 
-		for (char c : cidade.toCharArray()) {
-			if (!Character.isLetter(c) && !Character.isSpaceChar(c))
-				throw new CidadeInvalidaException("Tem que ser letras!");
-		}
+		//for (char c : cidade.toCharArray()) {
+		//	if (!Character.isLetter(c) && !Character.isSpaceChar(c))
+		//		throw new CidadeInvalidaException("Tem que ser letras!");
+		//}
 		this.cidade = cidade;
 	}
 
@@ -126,14 +129,14 @@ public class Endereco implements Serializable{
 		return estado;
 	}
 
-	public void setEstado(String estado) throws EstadoInvalidoException {
-		if (estado.isEmpty())
-			throw new EstadoInvalidoException("Não pode ser vazio!");
+	public void setEstado(String estado) { //throws EstadoInvalidoException 
+		//if (estado.isEmpty())
+		//	throw new EstadoInvalidoException("Não pode ser vazio!");
 
-		for (char c : estado.toCharArray()) {
-			if (!Character.isLetter(c) && !Character.isSpaceChar(c))
-				throw new EstadoInvalidoException("Tem que ser letras!");
-		}
+		//for (char c : estado.toCharArray()) {
+		//	if (!Character.isLetter(c) && !Character.isSpaceChar(c))
+		//		throw new EstadoInvalidoException("Tem que ser letras!");
+		//}
 		this.estado = estado;
 	}
 
@@ -144,7 +147,5 @@ public class Endereco implements Serializable{
 	public void setEscola(Escola escola) {
 		this.escola = escola;
 	}
-
-
 
 }

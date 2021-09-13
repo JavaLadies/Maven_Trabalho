@@ -39,17 +39,15 @@ public class Disciplina implements Serializable {
 
 	public Disciplina() {}
 	
-	public Disciplina(Long id, String nome) throws NomeInvalidoException {
-		setId(id);
+	public Disciplina(String nome, Turma turma)  { //throws NomeInvalidoException
 		setNome(nome);
+		adicionarTurma(turma);
+		adicionarDisciplinaNaTurma(turma);
+		
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getNome() {
@@ -57,10 +55,10 @@ public class Disciplina implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) throws NomeInvalidoException {
+	public void setNome(String nome) { //throws NomeInvalidoException
 
-		if (nome.isEmpty())
-			throw new NomeInvalidoException("Não pode ser vazio!");
+	//	if (nome.isEmpty())
+	//		throw new NomeInvalidoException("Não pode ser vazio!");
 
 		this.nome = nome;
 	}

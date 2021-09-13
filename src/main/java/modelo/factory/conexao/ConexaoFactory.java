@@ -15,12 +15,10 @@ public class ConexaoFactory {
 		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Aluno.class);
 		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Contato.class);
 		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Escola.class);
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Pessoa.class);
 		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Disciplina.class);
 		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Professor.class);
 		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Usuario.class);
 		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Turma.class);
-		configuracao.addAnnotatedClass(modelo.entidade.estudantil.Visitante.class);
 		configuracao.addAnnotatedClass(modelo.entidades.jogo.Jogo.class);
 		configuracao.addAnnotatedClass(modelo.entidades.jogo.Mundo.class);
 		configuracao.addAnnotatedClass(modelo.entidades.jogo.Fase.class);

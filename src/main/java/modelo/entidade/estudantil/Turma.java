@@ -1,6 +1,7 @@
 package modelo.entidade.estudantil;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +50,7 @@ public class Turma implements Serializable {
 	public Turma() {
 	}
 
-	public Turma(Long id, String nome, Escola escola) throws NomeInvalidoException {
-		setId(id);
+	public Turma(String nome, Escola escola)  { //throws NomeInvalidoException
 		setNome(nome);
 		setEscola(escola);
 	}
@@ -68,10 +68,10 @@ public class Turma implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) throws NomeInvalidoException {
+	public void setNome(String nome)  { //throws NomeInvalidoException
 
-		if (nome.isEmpty())
-			throw new NomeInvalidoException("Não pode ser vazio!");
+		//if (nome.isEmpty())
+			//throw new NomeInvalidoException("Não pode ser vazio!");
 
 		this.nome = nome;
 	}

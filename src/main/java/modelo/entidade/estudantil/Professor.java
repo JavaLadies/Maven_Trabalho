@@ -3,11 +3,10 @@ package modelo.entidade.estudantil;
 
 import java.io.Serializable;
 
+
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -20,14 +19,9 @@ import modelo.excecoes.pessoa.CpfInvalidoException;
 
 @Entity
 @Table(name = "professor")
-public class Professor extends Pessoa implements Serializable {
+public class Professor extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
-	//O professor vai guardar o id de sua disciplina.
-	@Id
-	@Column(name = "id_disciplina")
-	private Long id;
 	
 	//Um professor vai ter uma disciplina.
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -37,19 +31,9 @@ public class Professor extends Pessoa implements Serializable {
 
 	public Professor() {}
 	
-	public Professor(Long id, String nome, String cpf, String login, String senha, Contato contato)
-			throws NomeInvalidoException, CpfInvalidoException, SenhaInvalidaException, LoginInvalidoException {
-
-		super(nome, cpf, login, senha, contato);
-
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Professor(String nome, String login, String senha, Contato contato, Disciplina disciplina){ //throws NomeInvalidoException, CpfInvalidoException, SenhaInvalidaException, LoginInvalidoException
+		super(nome, login, senha, contato);
+		setDisciplina(disciplina);
 	}
 
 	public Disciplina getDisciplina() {

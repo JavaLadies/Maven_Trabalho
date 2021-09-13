@@ -1,4 +1,4 @@
-package modelo.dao.endereco;
+package modelo.dao.professor;
 
 import java.util.List;
 
@@ -10,19 +10,20 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import modelo.entidade.estudantil.Endereco;
-import modelo.entidade.estudantil.Escola;
+
+import modelo.entidade.estudantil.Disciplina;
+import modelo.entidade.estudantil.Professor;
+
 import modelo.factory.conexao.ConexaoFactory;
 
-public class EnderecoDAOImpl implements EnderecoDAO {
-
+public class ProfessorDAOImpl implements ProfessorDAO{
 	private ConexaoFactory fabrica;
 
-	public EnderecoDAOImpl() {
+	public ProfessorDAOImpl() {
 		fabrica = new ConexaoFactory();
 	}
-	
-	public void inserirEndereco(Endereco endereco) {
+
+	public void inserirProfessor(Professor professor) {
 
 		Session sessao = null;
 
@@ -31,37 +32,7 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
-			sessao.save(endereco);
-
-			sessao.getTransaction().commit();
-
-		} catch (Exception sqlException) {
-
-			sqlException.printStackTrace();
-
-			if (sessao.getTransaction() != null) {
-				sessao.getTransaction().rollback();
-			}
-
-		} finally {
-
-			if (sessao != null) {
-				sessao.close();
-			}
-		}
-
-	}
-
-	public void deletarEndereco(Endereco endereco) {
-
-		Session sessao = null;
-
-		try {
-
-			sessao = fabrica.getConexao().openSession();
-			sessao.beginTransaction();
-
-			sessao.delete(endereco);
+			sessao.save(professor);
 
 			sessao.getTransaction().commit();
 
@@ -81,7 +52,7 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 		}
 	}
 
-	public void atualizarEndereco(Endereco endereco) {
+	public void deletarProfessor(Professor professor) {
 
 		Session sessao = null;
 
@@ -90,7 +61,7 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
-			sessao.update(endereco);
+			sessao.delete(professor);
 
 			sessao.getTransaction().commit();
 
@@ -109,25 +80,17 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 			}
 		}
 	}
-	
-	public List<Endereco> recuperarEnderecos() {
+
+	public void atualizarProfessor(Professor professor) {
 
 		Session sessao = null;
-		List<Endereco> enderecos = null;
 
 		try {
 
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
-			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
-
-			CriteriaQuery<Endereco> criteria = construtor.createQuery(Endereco.class);
-			Root<Endereco> raizEndereco = criteria.from(Endereco.class);
-
-			criteria.select(raizEndereco);
-
-			enderecos = sessao.createQuery(criteria).getResultList();
+			sessao.update(professor);
 
 			sessao.getTransaction().commit();
 
@@ -145,14 +108,12 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 				sessao.close();
 			}
 		}
-
-		return enderecos;
 	}
 
-	public Endereco recuperarEnderecoEscola(Escola escola) {
+	public List<Professor> recuperarProfessor() {
 
 		Session sessao = null;
-		Endereco endereco = null;
+		List<Professor> professores = null;
 
 		try {
 
@@ -161,15 +122,12 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 
 			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
-			CriteriaQuery<Endereco> criteria = construtor.createQuery(Endereco.class);
-			Root<Endereco> raizEndereco = criteria.from(Endereco.class);
+			CriteriaQuery<Professor> criteria = construtor.createQuery(Professor.class);
+			Root<Professor> raizProfessor = criteria.from(Professor.class);
 
-			Join<Endereco, Escola> juncaoEscola = raizEndereco.join("escola");
+			criteria.select(raizProfessor);
 
-			ParameterExpression<Long> idEscola = construtor.parameter(Long.class);
-			criteria.where(construtor.equal(juncaoEscola.get("id"), idEscola));
-
-//			endereco = sessao.createQuery(criteria).setParameter(idEscola, escola.getId()).getSingleResult();
+			professores = sessao.createQuery(criteria).getResultList();
 
 			sessao.getTransaction().commit();
 
@@ -188,7 +146,48 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 			}
 		}
 
-		return endereco;
+		return professores;
 	}
-}
+	
+	public Professor recuperarProfessorDisciplina (Disciplina disciplina) {
 
+			Session sessao = null;
+			Professor professor = null;
+
+			try {
+
+				sessao = fabrica.getConexao().openSession();
+				sessao.beginTransaction();
+
+				CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+				CriteriaQuery<Professor> criteria = construtor.createQuery(Professor.class);
+				Root<Professor> raizProfessor = criteria.from(Professor.class);
+
+				Join<Professor, Disciplina> juncaoDisciplina = raizProfessor.join("disciplina");
+
+				ParameterExpression<Long> idDisciplina = construtor.parameter(Long.class);
+				criteria.where(construtor.equal(juncaoDisciplina.get("id"), idDisciplina));
+
+				professor = sessao.createQuery(criteria).setParameter(idDisciplina, disciplina.getId()).getSingleResult();
+
+				sessao.getTransaction().commit();
+
+			} catch (Exception sqlException) {
+
+				sqlException.printStackTrace();
+
+				if (sessao.getTransaction() != null) {
+					sessao.getTransaction().rollback();
+				}
+
+			} finally {
+
+				if (sessao != null) {
+					sessao.close();
+				}
+			}
+
+			return professor;
+		}
+	}
