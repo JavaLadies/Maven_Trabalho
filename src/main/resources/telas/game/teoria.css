@@ -11,6 +11,10 @@ body {
     color: #eee;
 }
 
+#botao {
+    border-radius: 5px;
+}
+
 .outer-wrapper {
     width: 80%;
     margin: 50px auto;
@@ -21,7 +25,7 @@ body {
     margin-bottom: 50px;
     padding-bottom: 55%;
     position: relative;
-    border: 10px solid #fff;
+    border: 10px solid #1A1E2D;
     background-color: #efefe8;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -105,9 +109,9 @@ body {
 .s-type-1 .s-nav label::after {
     content: "";
     display: block;
-    width: 8px;
+    width: 6px;
     height: 24px;
-    background-color: #fff;
+    background-color: #1A1E2D;
 }
 
 .s-type-1 .s-nav label::before {
@@ -115,7 +119,7 @@ body {
 }
 
 .s-type-1 .s-nav label.left {
-    left: 20px;
+    left: 6px;
 }
 
 .s-type-1 .s-nav label.left::before {
@@ -127,7 +131,7 @@ body {
 }
 
 .s-type-1 .s-nav label.right {
-    right: 20px;
+    right: 6px;
 }
 
 .s-type-1 .s-nav label.right::before {
@@ -239,14 +243,4 @@ body {
     94.5% {
         transform: translateX(-20%);
     }
-}
-
-.botao {
-    margin: 8px;
-    margin-right: 8px;
-    width: 160px;
-    height: 30px;
-    position: fixed;
-    bottom: 0;
-    right: 0;
 }

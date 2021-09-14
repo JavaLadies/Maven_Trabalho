@@ -2,6 +2,7 @@
 * {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 25px;
+    display: inline-block;
 }
 
 .botao:hover,
@@ -11,13 +12,12 @@
 }
 
 .botao {
-    width: 200px;
-    height: 60px;
+    width: 400px;
+    height: 90px;
     border-radius: 5px;
     border-color: #7700a6;
     color: white;
     box-shadow: 0 0 40px 40px #7700a6 inset, 0 0 0 0 #7700a6;
-    -webkit-transition: all 150ms ease-in-out;
     transition: all 150ms ease-in-out;
 }
 
@@ -32,13 +32,12 @@
 }
 
 .botao2 {
-    width: 200px;
-    height: 60px;
+    width: 400px;
+    height: 90px;
     border-radius: 5px;
     border-color: #7700a6;
     color: white;
     box-shadow: 0 0 40px 40px #7700a6 inset, 0 0 0 0 #7700a6;
-    -webkit-transition: all 150ms ease-in-out;
     transition: all 150ms ease-in-out;
 }
 
