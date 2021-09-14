@@ -39,8 +39,7 @@ public class Opcao implements Serializable {
 
 	public Opcao() {}
 	
-	public Opcao (Long id, String texto, byte ordem, boolean isCorreta, Atividade atividade) {
-		setId(id);
+	public Opcao (String texto, byte ordem, boolean isCorreta, Atividade atividade) {
 		setTexto(texto);
 		setOrdem(ordem);
 		setCorreta(isCorreta);

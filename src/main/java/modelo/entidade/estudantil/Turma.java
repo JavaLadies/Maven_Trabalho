@@ -2,6 +2,7 @@ package modelo.entidade.estudantil;
 
 import java.io.Serializable;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import modelo.excecoes.NomeInvalidoException;
 
 @Entity
 @Table(name = "turma")

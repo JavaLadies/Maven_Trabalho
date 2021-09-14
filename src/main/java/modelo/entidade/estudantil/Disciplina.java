@@ -1,6 +1,7 @@
 package modelo.entidade.estudantil;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import modelo.excecoes.NomeInvalidoException;
 
 @Entity
 @Table(name = "disciplina")
@@ -32,6 +33,10 @@ public class Disciplina implements Serializable {
 	@Column(name = "nome_disciplina", length = 45, nullable = false, unique = true)
 	private String nome;
 	
+	//Uma disciplina tem vários professores
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Professor> professores = new ArrayList<Professor>();
+	
 	//Uma disciplina tem várias turmas.
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "disciplina_turma", joinColumns = @JoinColumn(name = "id_disciplina"), inverseJoinColumns = @JoinColumn(name = "id_turma"))
@@ -39,7 +44,7 @@ public class Disciplina implements Serializable {
 
 	public Disciplina() {}
 	
-	public Disciplina(String nome, Turma turma)  { //throws NomeInvalidoException
+	public Disciplina(String nome, Turma turma)  {
 		setNome(nome);
 		adicionarTurma(turma);
 		adicionarDisciplinaNaTurma(turma);
@@ -55,16 +60,17 @@ public class Disciplina implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) { //throws NomeInvalidoException
-
-	//	if (nome.isEmpty())
-	//		throw new NomeInvalidoException("Não pode ser vazio!");
+	public void setNome(String nome) { 
 
 		this.nome = nome;
 	}
 
 	public List<Turma> getTurmas() {
 		return turmas;
+	}
+	
+	public List<Professor> getProfessor () {
+		return professores;
 	}
 
 	public void adicionarTurma(Turma turma) {

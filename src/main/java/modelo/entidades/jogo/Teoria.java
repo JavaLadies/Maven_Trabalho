@@ -23,7 +23,7 @@ public class Teoria implements Serializable {
 	@Column(name = "id_teoria")
 	private Long id;
 	
-	@Column(name = "texto_teoria", length = 200, nullable = true, unique = false)
+	@Column(name = "texto_teoria", length = 300, nullable = true, unique = false)
 	private String texto;
 	
 	//Uma teoria terá uma fase (Uma fase tem várias teorias)
@@ -33,8 +33,7 @@ public class Teoria implements Serializable {
 
 	public Teoria() {}
 	
-	public Teoria(Long id, String texto, Fase fase) {
-		setId(id);
+	public Teoria(String texto, Fase fase) {
 		setTexto(texto);
 		setFase(fase);
 	}

@@ -42,7 +42,7 @@ public class Jogo implements Serializable {
 	@JoinColumn(name = "id_disciplina")
 	private Disciplina disciplina;
 	
-	@Column(name = "media_jogo",nullable = true, unique = false)
+	@Column(name = "media_jogo", nullable = true, unique = false)
 	private float media;
 	
 	public Jogo() {}

@@ -1,6 +1,7 @@
 package modelo.entidade.estudantil;
 
 import java.io.Serializable;
+
 import java.util.InputMismatchException;
 
 import javax.persistence.Column;
@@ -10,10 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.excecoes.LoginInvalidoException;
-
-import modelo.excecoes.NomeInvalidoException;
-import modelo.excecoes.SenhaInvalidaException;
 import modelo.excecoes.pessoa.CpfInvalidoException;
 
 @Entity
@@ -22,7 +19,6 @@ public class Aluno extends Usuario implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
 
-	
 	@Column(name = "cpf_pessoa", length = 14, nullable = false, unique = true)
 	private String cpf;
 	
@@ -33,20 +29,11 @@ public class Aluno extends Usuario implements Serializable  {
 
 	public Aluno() {}
 	
-	public Aluno(String nome, String cpf, String login, String senha, Contato contato, Turma turma)  { //throws NomeInvalidoException, CpfInvalidoException, 
-		//SenhaInvalidaException, LoginInvalidoException
+	public Aluno(String nome, String cpf, String login, String senha, Contato contato, Turma turma) { // throws CpfInvalidoException
 		super(nome, login, senha, contato);
 		setCpf(cpf);
 		setTurma(turma);
 	}
-
-	//public Long getId() {
-	//	return id;
-	//}
-
-	//public void setId(Long id) {
-	//	this.id = id;
-	//}
 
 	public Turma getTurma() {
 		return turma;
@@ -60,13 +47,10 @@ public class Aluno extends Usuario implements Serializable  {
 		return cpf;
 	}
 	
-	public void setCpf (String cpf) { // throws CpfInvalidoException
-		
-		//if (cpf.isEmpty())
-			//throw new CpfInvalidoException("Não pode ser vazio!");
-		
+	public void setCpf (String cpf) { //throws CpfInvalidoException
+
 		//if (!isCPF(cpf))
-			//throw new CpfInvalidoException("Esse cpf não existe!");
+		//	throw new CpfInvalidoException("Esse cpf não existe!");
 		
 		this.cpf = cpf;
 	}
@@ -131,6 +115,4 @@ public class Aluno extends Usuario implements Serializable  {
             return(CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +
             CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
         }
-
-
 }

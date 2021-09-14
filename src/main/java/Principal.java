@@ -1,5 +1,7 @@
 import modelo.dao.aluno.AlunoDAO;
 import modelo.dao.aluno.AlunoDAOImpl;
+import modelo.dao.atividade.AtividadeDAO;
+import modelo.dao.atividade.AtividadeDAOImpl;
 import modelo.dao.contato.ContatoDAO;
 import modelo.dao.contato.ContatoDAOImpl;
 import modelo.dao.disciplina.DisciplinaDAO;
@@ -14,8 +16,12 @@ import modelo.dao.jogo.JogoDAO;
 import modelo.dao.jogo.JogoDAOImpl;
 import modelo.dao.mundo.MundoDAO;
 import modelo.dao.mundo.MundoDAOImpl;
+import modelo.dao.opcao.OpcaoDAO;
+import modelo.dao.opcao.OpcaoDAOImpl;
 import modelo.dao.professor.ProfessorDAO;
 import modelo.dao.professor.ProfessorDAOImpl;
+import modelo.dao.teoria.TeoriaDAO;
+import modelo.dao.teoria.TeoriaDAOImpl;
 import modelo.dao.turma.TurmaDAO;
 import modelo.dao.turma.TurmaDAOImpl;
 import modelo.entidade.estudantil.Aluno;
@@ -25,15 +31,23 @@ import modelo.entidade.estudantil.Endereco;
 import modelo.entidade.estudantil.Escola;
 import modelo.entidade.estudantil.Professor;
 import modelo.entidade.estudantil.Turma;
+import modelo.entidades.jogo.Atividade;
 import modelo.entidades.jogo.Fase;
 import modelo.entidades.jogo.Jogo;
 import modelo.entidades.jogo.Mundo;
+import modelo.entidades.jogo.Opcao;
+import modelo.entidades.jogo.Teoria;
+import modelo.excecoes.endereco.CidadeInvalidaException;
+import modelo.excecoes.endereco.EstadoInvalidoException;
+import modelo.excecoes.endereco.NumeroInvalidoException;
+import modelo.excecoes.pessoa.CpfInvalidoException;
 
 
 public class Principal {
 
 	public static void main(String[] args) {
 		
+		try { 
 		EscolaDAO escolaDao = new EscolaDAOImpl();
         TurmaDAO turmaDao = new TurmaDAOImpl();
         ContatoDAO contatoDao = new ContatoDAOImpl();
@@ -42,32 +56,32 @@ public class Principal {
         EnderecoDAO enderecoDao = new EnderecoDAOImpl();
         ProfessorDAO professorDao = new ProfessorDAOImpl();
         
-        String email = "Senac28@gmail.com";
-        int celular = 444566666;
-        int telefone = 33383732;
+        String emailEscola = "SesiSenai@email.com";
+        int celularEscola = 222221222;
+        int telefoneEscola = 22221222;
 
-        Contato contato = new Contato();
+        Contato contatoEscola = new Contato();
 
-        contato.setEmail(email);
-        contato.setCelular(celular);
-        contato.setTelefone(telefone);
+        contatoEscola.setEmail(emailEscola);
+        contatoEscola.setCelular(celularEscola);
+        contatoEscola.setTelefone(telefoneEscola);
         
-        contatoDao.inserirContato(contato);
+        contatoDao.inserirContato(contatoEscola);
         
-        String nome = "Senac08";
-        String login = "SenacEs0ola28";
-        String senha = "3332120";
+        String nomeEscola = "SesiSenai";
+        String loginEscola = "Senaithebester2";
+        String senhaEscola = "SesiSenaiSEscolaSSSSesi";
         
         Escola escola = new Escola();
         
-        escola.setNome(nome);
-        escola.setLogin(login);
-        escola.setSenha(senha);
-        escola.setContato(contato);
+        escola.setNome(nomeEscola);
+        escola.setLogin(loginEscola);
+        escola.setSenha(senhaEscola);
+        escola.setContato(contatoEscola);
         
         escolaDao.inserirEscola(escola);
         
-        String nomeTurma = "Java Web Vespertino";
+        String nomeTurma = "204";
         
         Turma turma = new Turma();
         
@@ -76,9 +90,9 @@ public class Principal {
         
         turmaDao.inserirTurma(turma);
         
-        String emailAluno = "Gustag0lXD@gmail.com";
-        int celularAluno = 987765403;
-        int telefoneAluno = 79654507;
+        String emailAluno = "Kaue22@email.com";
+        int celularAluno = 111111211;
+        int telefoneAluno = 11112111;
 
         Contato contatoAluno = new Contato();
 
@@ -88,10 +102,10 @@ public class Principal {
         
         contatoDao.inserirContato(contatoAluno);
         
-        String nomeAluno = "Gustavo Henrique J0nkes";
-        String cpf = "888.234.964-90";
-        String loginALuno = "GustagolXD4";
-        String senhaAluno = "Omundoébelomentirakkk";
+        String nomeAluno = "Kaue tribessbess";
+        String cpf = "987.099.678-01";
+        String loginALuno = "tribesskaue";
+        String senhaAluno = "hamburgui";
 	
         Aluno aluno = new Aluno();
         
@@ -104,7 +118,7 @@ public class Principal {
         
         alunoDao.inserirAluno(aluno);
         
-        String nomeDisciplina = "python";
+        String nomeDisciplina = "Fundamentos da tecnologia da informação";
         
         Disciplina disciplina = new Disciplina();
         
@@ -114,11 +128,11 @@ public class Principal {
         
         disciplinaDao.inserirDisciplina(disciplina);
         
-        String nomeEndereco = "Rua da palmirinha e do loro josé e o ratinho";
-        String complemento = "apartamento 90";
-        short numero = 134;
-        String cidade = "Blumenauiina";
-        String estado = "Santa Catarinaina";
+        String nomeEndereco = "Rua São Paulo";
+        String complemento = "Bloco H";
+        short numero = 222;
+        String cidade = "Blumenau";
+        String estado = "Santa Catarina";
         
         Endereco endereco = new Endereco();
         
@@ -131,9 +145,9 @@ public class Principal {
         
         enderecoDao.inserirEndereco(endereco);
         
-        String emailProfessor = "GustagolXD@gmail.com";
-        int celularProfessor = 987765433;
-        int telefoneProfessor = 79654567;
+        String emailProfessor = "Bianca@email.com";
+        int celularProfessor = 444444449;
+        int telefoneProfessor = 44444449;
 
         Contato contatoProfessor = new Contato();
 
@@ -143,9 +157,9 @@ public class Principal {
         
         contatoDao.inserirContato(contatoProfessor);
         
-        String nomeProfessor = "rui";
-        String loginProfessor = "ruibarbosou";
-        String senhaProfessor = "rinoceronte";
+        String nomeProfessor = "Bianca Alguma Coisa";
+        String loginProfessor = "BiancaDoZoiPequeno";
+        String senhaProfessor = "chicoliro";
         
         Professor professor = new Professor();
         
@@ -153,12 +167,16 @@ public class Principal {
         professor.setLogin(loginProfessor);
         professor.setSenha(senhaProfessor);
         professor.setContato(contatoProfessor);
+        professor.setDisciplina(disciplina);
         
         professorDao.inserirProfessor(professor);
         
         JogoDAO jogoDao = new JogoDAOImpl();
         MundoDAO mundoDao = new MundoDAOImpl();
         FaseDAO faseDao = new FaseDAOImpl();
+        TeoriaDAO teoriaDao = new TeoriaDAOImpl();
+        AtividadeDAO atividadeDao = new AtividadeDAOImpl();
+        OpcaoDAO opcaoDao = new OpcaoDAOImpl();
         
         float mediaJogo = 9;
         
@@ -169,8 +187,8 @@ public class Principal {
         
         jogoDao.inserirJogo(jogo);
         
-        String nomeMundo = "Lógica gamer";
-        float mediaMundo = 9;
+        String nomeMundo = "Segurança das Informações";
+        float mediaMundo = 8;
 
         Mundo mundo = new Mundo();
         
@@ -181,8 +199,8 @@ public class Principal {
         
         mundoDao.inserirMundo(mundo);
         
-        String nomeFase = "algoritmo";
-        float notaFase = 9;
+        String nomeFase = "Malware";
+        float notaFase = 8;
         
         Fase fase = new Fase();
         
@@ -193,6 +211,87 @@ public class Principal {
         
         faseDao.inserirFase(fase);
         
+        String texto = "Malware é poipipopopo";
         
+        Teoria teoria = new Teoria();
+        
+        teoria.setTexto(texto);
+        teoria.setFase(fase);
+        
+        teoriaDao.inserirTeoria(teoria);
+        
+        String enunciado = "O que é malware?";
+        
+        Atividade atividade = new Atividade();
+        
+        atividade.setEnunciado(enunciado);
+        atividade.setFase(fase);
+        
+        atividadeDao.inserirAtividade(atividade);
+        
+        String texto1 = "pipipopopo";
+        byte ordem1 = 1;
+        boolean isCorreta1 = true;
+        
+        Opcao opcao1 = new Opcao();
+        
+        opcao1.setTexto(texto1);
+        opcao1.setOrdem(ordem1);
+        opcao1.setCorreta(isCorreta1);
+        opcao1.setAtividade(atividade);
+        
+        opcaoDao.inserirOpcao(opcao1);
+        
+        String texto2 = "não é essa";
+        byte ordem2 = 2;
+        boolean isCorreta2 = false;
+        
+        Opcao opcao2 = new Opcao();
+        
+        opcao2.setTexto(texto2);
+        opcao2.setOrdem(ordem2);
+        opcao2.setCorreta(isCorreta2);
+        opcao2.setAtividade(atividade);
+        
+        opcaoDao.inserirOpcao(opcao2);
+
+        String texto3 = "nem essa";
+        byte ordem3 = 3;
+        boolean isCorreta3 = false;
+        
+        Opcao opcao3 = new Opcao();
+        
+        opcao3.setTexto(texto3);
+        opcao3.setOrdem(ordem3);
+        opcao3.setCorreta(isCorreta3);
+        opcao3.setAtividade(atividade);
+        
+        opcaoDao.inserirOpcao(opcao3);
+
+        String texto4 = "nao clica irmao";
+        byte ordem4 = 4;
+        boolean isCorreta4 = false;
+        
+        Opcao opcao4 = new Opcao();
+        
+        opcao4.setTexto(texto4);
+        opcao4.setOrdem(ordem4);
+        opcao4.setCorreta(isCorreta4);
+        opcao4.setAtividade(atividade);
+        
+        opcaoDao.inserirOpcao(opcao4);
+		}
+		
+		catch(CidadeInvalidaException e) {
+			System.err.print("Cidade inválida: " + e);
+		}
+		
+		catch(EstadoInvalidoException e) {
+			System.err.print("Estado inválido: " + e);
+		}
+		
+		catch(NumeroInvalidoException e) {
+			System.err.print("Número inválido: " + e);
+		}
 	}
 }

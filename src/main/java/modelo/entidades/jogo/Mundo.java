@@ -1,6 +1,7 @@
 package modelo.entidades.jogo;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -19,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import modelo.excecoes.NomeInvalidoException;
 
 @Entity
 @Table(name = "mundo")
@@ -72,10 +72,7 @@ public class Mundo  implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) { //throws NomeInvalidoException 
-
-		//if (nome.isEmpty())
-		//	throw new NomeInvalidoException("Nome inválido: Não pode ser vazio!");
+	public void setNome(String nome) { 
 
 		this.nome = nome;
 	}
