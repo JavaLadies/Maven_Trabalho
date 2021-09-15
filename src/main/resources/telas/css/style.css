@@ -1,4 +1,4 @@
-/* RODAPÉ */
+/* ----- RODAPÉ ----- */
 
 
 /* Caixa */
@@ -210,16 +210,16 @@ body {
 /* 1 E 2 ENDEREÇO E DADOS*/
 
 #form {
-    width: 525px !important;
+    width: 800px ;
     height: auto;
-    margin: 0 auto 0 auto !important;
+    margin: 0 auto 0 auto ;
 }
 
 
 /* CAIXA GERAL*/
 
 #form fieldset {
-    width: 525px !important;
+    width: 525px ;
     background: #fff;
     border: none;
     border-radius: 2px;
@@ -234,6 +234,7 @@ body {
     -o-transform: scale(1);
     transform: scale(1);
 }
+
 
 #form fieldset:not(:first-of-type) {
     display: none;
