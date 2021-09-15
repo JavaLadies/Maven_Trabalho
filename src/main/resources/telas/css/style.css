@@ -197,8 +197,9 @@ body {
 }
 
 #progresso li:first-child::after {
-    display: none;
+   display: none;
 }
+
 
 #progresso li.ativo::before,
 #progresso li.ativo::after {
@@ -260,6 +261,11 @@ body {
     font-weight: 300;
 }
 
+#form fieldset span {
+  display: block;
+  color: #c1c1c1;
+  font-size: 0.8rem;
+}
 
 /* CAIXAS DE TEXTO DO BOTÃO */
 
