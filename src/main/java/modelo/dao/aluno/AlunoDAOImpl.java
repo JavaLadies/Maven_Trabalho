@@ -110,6 +110,48 @@ public class AlunoDAOImpl implements AlunoDAO {
 			}
 		}
 	}
+	
+	public Aluno recuperarAluno(Aluno aluno) {
+
+		Session sessao = null;
+		Aluno alunoRecuperado = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Aluno> criteria = construtor.createQuery(Aluno.class);
+			Root<Aluno> raizAluno= criteria.from(Aluno.class);
+
+			criteria.select(raizAluno);
+			
+			ParameterExpression<Long> idAluno= construtor.parameter(Long.class);
+			criteria.where(construtor.equal(raizAluno.get("id"), idAluno));
+
+			alunoRecuperado = sessao.createQuery(criteria).setParameter(idAluno, aluno.getId()).getSingleResult();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return alunoRecuperado;
+	}
 
 	public List<Aluno> recuperarAlunos() {
 

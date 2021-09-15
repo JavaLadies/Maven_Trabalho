@@ -44,6 +44,10 @@ public abstract class Usuario implements Serializable {
 	
 	public Usuario() {}
 	
+	public Usuario(Long id) {
+		setId(id);
+	}
+	
 	public Usuario(String nome, String login, String senha, Contato contato)  {
 		setNome(nome);
 		setLogin(login);

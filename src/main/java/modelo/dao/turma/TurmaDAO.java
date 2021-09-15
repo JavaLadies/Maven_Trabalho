@@ -13,6 +13,8 @@ public interface TurmaDAO {
 	
 	void atualizarTurma (Turma turma);
 	
+	Turma recuperarTurma (Turma turma);
+	
 	List<Turma> recuperarTurmas();
 
 	List<Turma> recuperarTurmasEscola(Escola escola);

@@ -110,6 +110,48 @@ public class DisciplinaDAOImpl implements DisciplinaDAO {
 			}
 		}
 	}
+	
+	public Disciplina recuperarDisciplina(Disciplina disciplina) {
+
+		Session sessao = null;
+		Disciplina disciplinaRecuperada = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Disciplina> criteria = construtor.createQuery(Disciplina.class);
+			Root<Disciplina> raizDisciplina = criteria.from(Disciplina.class);
+
+			criteria.select(raizDisciplina);
+			
+			ParameterExpression<Long> idDisciplina= construtor.parameter(Long.class);
+			criteria.where(construtor.equal(raizDisciplina.get("id"), idDisciplina));
+
+			disciplinaRecuperada = sessao.createQuery(criteria).setParameter(idDisciplina, disciplina.getId()).getSingleResult();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return disciplinaRecuperada;
+	}
 
 	public List<Disciplina> recuperarDisciplinas() {
 

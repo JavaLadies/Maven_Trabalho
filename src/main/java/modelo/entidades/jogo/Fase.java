@@ -58,6 +58,10 @@ public class Fase implements Serializable {
 
 	public Fase() {}
 	
+	public Fase(Long id) {
+		setId(id);
+	}
+	
 	public Fase( String nome, Mundo mundo, Situacao status) { //throws NomeInvalidoException 
 		setNome(nome);
 		setMundo(mundo);

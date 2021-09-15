@@ -109,6 +109,48 @@ public class ProfessorDAOImpl implements ProfessorDAO{
 			}
 		}
 	}
+	
+	public Professor recuperarProfessor(Professor professor) {
+
+		Session sessao = null;
+		Professor professorRecuperado = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Professor> criteria = construtor.createQuery(Professor.class);
+			Root<Professor> raizProfessor = criteria.from(Professor.class);
+
+			criteria.select(raizProfessor);
+			
+			ParameterExpression<Long> idProfessor= construtor.parameter(Long.class);
+			criteria.where(construtor.equal(raizProfessor.get("id"), idProfessor));
+
+			professorRecuperado = sessao.createQuery(criteria).setParameter(idProfessor, professor.getId()).getSingleResult();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return professorRecuperado;
+	}
 
 	public List<Professor> recuperarProfessor() {
 

@@ -47,6 +47,10 @@ public class Jogo implements Serializable {
 	
 	public Jogo() {}
 	
+	public Jogo(Long id) {
+		setId(id);
+	}
+	
 	public Jogo(float media, Disciplina disciplina) {
 		setDisciplina(disciplina);
 		setMedia(media);

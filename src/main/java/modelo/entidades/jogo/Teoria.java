@@ -33,6 +33,10 @@ public class Teoria implements Serializable {
 
 	public Teoria() {}
 	
+	public Teoria(Long id) {
+		setId(id);
+	}
+	
 	public Teoria(String texto, Fase fase) {
 		setTexto(texto);
 		setFase(fase);

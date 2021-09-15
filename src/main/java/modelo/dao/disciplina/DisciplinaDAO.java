@@ -13,6 +13,8 @@ public interface DisciplinaDAO {
 	
 	void atualizarDisciplina(Disciplina disciplina);
 	
+	Disciplina recuperarDisciplina(Disciplina disciplina);
+	
 	List<Disciplina> recuperarDisciplinas();
 	
 	List<Disciplina> recuperarDisciplinasTurma(Turma turma);

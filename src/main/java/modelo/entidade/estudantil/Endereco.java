@@ -53,10 +53,13 @@ public class Endereco implements Serializable {
 
 	public Endereco() {
 	}
+	
+	public Endereco(Long id) {
+		setId(id);
+	}
 
 	public Endereco(String nome, String complemento, short numero, String cidade, String estado)
 			throws NumeroInvalidoException, CidadeInvalidaException, EstadoInvalidoException {
-
 		setNome(nome);
 		setComplemento(complemento);
 		setNumero(numero);

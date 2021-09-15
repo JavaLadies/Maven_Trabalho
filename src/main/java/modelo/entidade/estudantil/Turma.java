@@ -49,6 +49,10 @@ public class Turma implements Serializable {
 
 	public Turma() {
 	}
+	
+	public Turma(Long id) {
+		setId(id);
+	}
 
 	public Turma(String nome, Escola escola)  { //throws NomeInvalidoException
 		setNome(nome);

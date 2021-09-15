@@ -12,6 +12,8 @@ public interface ProfessorDAO {
 	void deletarProfessor(Professor professor);
 
 	void atualizarProfessor(Professor professor);
+	
+	Professor recuperarProfessor(Professor professor);
 
 	List<Professor> recuperarProfessor();
 

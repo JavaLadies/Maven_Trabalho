@@ -44,6 +44,10 @@ public class Disciplina implements Serializable {
 
 	public Disciplina() {}
 	
+	public Disciplina(Long id) {
+		setId(id);
+	}
+	
 	public Disciplina(String nome, Turma turma)  {
 		setNome(nome);
 		adicionarTurma(turma);
@@ -53,6 +57,10 @@ public class Disciplina implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {

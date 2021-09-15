@@ -52,6 +52,10 @@ public class Atividade implements Serializable {
 
 	public Atividade () {}
 	
+	public Atividade(Long id) {
+		setId(id);
+	}
+	
 	public Atividade(String enunciado, Fase fase) {
 		setEnunciado(enunciado);
 		setFase(fase);

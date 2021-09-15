@@ -54,6 +54,10 @@ public class Mundo  implements Serializable {
 
 	public Mundo() {}
 	
+	public Mundo(Long id) {
+		setId(id);
+	}
+	
 	public Mundo(String nome, Situacao status, float media) { //throws NomeInvalidoException
 		setNome(nome);
 		setStatus(status);

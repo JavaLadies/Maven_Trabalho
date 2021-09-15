@@ -112,6 +112,48 @@ public class TurmaDAOImpl implements TurmaDAO{
 		}
 	}
 	
+	public Turma recuperarTurma(Turma turma) {
+
+		Session sessao = null;
+		Turma turmaRecuperado = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<Turma> criteria = construtor.createQuery(Turma.class);
+			Root<Turma> raizTurma = criteria.from(Turma.class);
+
+			criteria.select(raizTurma);
+			
+			ParameterExpression<Long> idTurma= construtor.parameter(Long.class);
+			criteria.where(construtor.equal(raizTurma.get("id"), idTurma));
+
+			turmaRecuperado = sessao.createQuery(criteria).setParameter(idTurma, turma.getId()).getSingleResult();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return turmaRecuperado;
+	}
+	
 	public List<Turma> recuperarTurmas() {
 
 		Session sessao = null;

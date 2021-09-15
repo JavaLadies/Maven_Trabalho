@@ -11,6 +11,8 @@ public interface AlunoDAO {
 	void deletarAluno(Aluno aluno);
 
 	void atualizarAluno(Aluno aluno);
+	
+	Aluno recuperarAluno(Aluno aluno);
 
 	List<Aluno> recuperarAlunos();
 	
