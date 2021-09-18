@@ -9,12 +9,30 @@
 </head>
 
 <body>
-
-    <form action="#">
-        <button class="botao" type="submit">como jogar</button>
-    </form>
+    <input type="checkbox" id="modal" />
+    <label for="modal" class="modal-btn">
+        <i class="button" aria-hidden="true"></i>
+    </label>
+    <label for="modal" class="modal-bg"></label>
+    <div class="modal-content">
+        <label for="modal" class="close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </label>
+        <header>
+            <h2>Como jogar!</h3>
+        </header>
+        <article class="content">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit faucibus duis curae dictum laoreet, nibh hendrerit
+                volutpat vulputate nisl praesent ultricies rutrum nullam dui facilisis. Ex dapibus quis montes placerat
+                aliquam maximus, sed condimentum tempus venenatis est.</p>
+        </article>
+        <footer>
+            <label for="modal" class="button ">Fechar</label>
+        </footer>
+    </div>
+    
     <form action="game.html">
-        <button class="botao" type="submit">jogar</button>
+        <button class="button" type="submit">jogar</button>
     </form>
 </body>
 

@@ -4,43 +4,21 @@
     font-size: 25px;
     display: inline-block;
 }
+.modal-btn .button:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: width 250ms ease;
+    z-index: 0;
+  }
+  .modal-btn .button:hover:before {
+    width: 100%;
+  }
 
-.botao:hover,
-.botao:focus {
-    color: #7700a6;
-    outline: 0;
-}
-
-.botao {
-    width: 400px;
-    height: 90px;
-    border-radius: 5px;
-    border-color: #7700a6;
-    color: white;
-    box-shadow: 0 0 40px 40px #7700a6 inset, 0 0 0 0 #7700a6;
-    transition: all 150ms ease-in-out;
-}
-
-.botao:hover {
-    box-shadow: 0 0 10px 0 #7700a6 inset, 0 0 10px 4px;
-}
-
-.botao2:hover,
-.botao2:focus {
-    color: #7700a6;
-    outline: 0;
-}
-
-.botao2 {
-    width: 400px;
-    height: 90px;
-    border-radius: 5px;
-    border-color: #7700a6;
-    color: white;
-    box-shadow: 0 0 40px 40px #7700a6 inset, 0 0 0 0 #7700a6;
-    transition: all 150ms ease-in-out;
-}
-
-.botao2:hover {
-    box-shadow: 0 0 10px 0 #7700a6 inset, 0 0 10px 4px;
-}
+  .modal-btn .button {
+    background-color: #e74c3c;
+  }
